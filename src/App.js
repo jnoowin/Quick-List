@@ -8,6 +8,7 @@ const Todo = ({ todo, index, completeTodo, removeTodo }) => {
       style = {{ textDecoration: todo.isCompleted ? "line-through" : "" }}
       >
       {todo.text}
+      
       <div>
         <button 
           className = "button"
@@ -38,12 +39,21 @@ function TodoForm({ addTodo }) {
   
   return(
     <div>  
-      <form onSubmit = {handleSubmit}>
+      <form 
+        onSubmit = {handleSubmit}
+        className = "form"
+        >
         <input
-          type = "text"
+          style = {{ display:"inline"}}
           className = "input"
+          type = "text"
           value = {value}
           onChange = {e => setValue(e.target.value)}/>
+          <button 
+            className = "enterButton"
+            onClick = {handleSubmit}
+            >Enter
+          </button>
       </form>
     </div>
   );

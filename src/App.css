@@ -1,40 +1,65 @@
 .app {
-    background: rgb(139, 196, 246);
     padding: 30px;
-    height: 100vh;
+
 }
 
 .button {
-    background-color: #fff;
-    border-width: 1px; 
+    background-color: rgb(238, 235, 235);
+    border-width: 0px; 
     font-family: Arial, Helvetica, sans-serif;
     color: rgb(97, 95, 95);
     font-size: 16px;
     border-radius: 6px;
-    padding: 3px 10px;
-    display: inline-block;
+    padding: 6px 10px 6px 10px;
+    display: inline-table;
     cursor: pointer;
+    margin-right: 1px;
+}
+
+.button:hover {
+    background-color: rgba(204, 203, 203, 0.867);
+}
+
+.enterButton {
+    background-color:rgb(238, 235, 235);
+    border-width: 0px;
+    color: rgb(97, 95, 95);
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 6px 10px 6px 10px;
+    display: inline-table;
+    cursor: pointer;
+    width:15%;
+}
+
+.enterButton:hover{
+    background-color: rgba(204, 203, 203, 0.867);
 }
 
 .input {
-    background: #fff;
-    width: 80%;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
-    padding: 3px 10px;
+    align-items: baseline;
+    border-width: 1px;
+    display: flex;
+    color: rgb(97, 95, 95);
     font-size: 22px;
     font-family: Arial, Helvetica, sans-serif;
-    margin-bottom: 6px;
-    border-radius: 3px;
-    display: flex;
+    padding: 3px 10px;
+    width: 85%;
+}
+
+.form{
     align-items: center;
-    justify-content: space-between;
+    background: #fff;
+    display: flex;
 }
 
 .todo-list {
     background: #e8e8e8;
     border-radius: 4px;
+    display: flex;
+    flex-direction: column;
     padding: 4px;
-    max-width: 40%;
+    max-width: 30%;
 }
 
 .todo {
