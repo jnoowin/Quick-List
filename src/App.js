@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import "./App.css";
+import Accordion from "./components/Accordion";
 
 const Todo = ({ todo, index, completeTodo, removeTodo }) => {
+  const accordionChange = () => {
+    console.log("popp")
+  }
+  
   return(
     <div 
       className = "todo"
       style = {{ textDecoration: todo.isCompleted ? "line-through" : "" }}
+      onClick = {() => accordionChange()}
       >
       {todo.text}
-      
-      <div>
-        <button 
+      <div className = "buttonDiv">
+        <button
           className = "button"
           onClick = {() => completeTodo(index)}
           >
@@ -91,21 +96,28 @@ export default function App() {
 
   return(
     <div className = "app">
-      <div className = "todo-list">
-
-        {todos.map((todo, index) => (
-          <Todo
-            key = {index}
-            index = {index}
-            todo = {todo}
-            completeTodo = {completeTodo}
-            removeTodo = {removeTodo}
+      <div className = "nav-div">
+        <div className = "navbar">
+          <ul className = "ul">
+            <li>To-do List</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div className = "todo-list">
+          {todos.map((todo, index) => (
+            <Todo
+              key = {index}
+              index = {index}
+              todo = {todo}
+              completeTodo = {completeTodo}
+              removeTodo = {removeTodo}
+            />
+          ))}
+          <TodoForm 
+            addTodo = {addTodo}
           />
-        ))}
-
-        <TodoForm 
-          addTodo = {addTodo}
-        />
+        </div>
       </div>
     </div>
   );

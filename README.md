@@ -1,55 +1,68 @@
-# Nano React App Default Javascript Template
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-The default template project for [nano-react-app](https://github.com/adrianmcli/nano-react-app).
+## Available Scripts
 
-- `npm start` — This will spawn a development server with a default port of `1234`.
-- `npm run build` — This will output a production build in the `dist` directory.
+In the project directory, you can run:
 
-## Custom port
+### `npm start`
 
-You can use the `-p` flag to specify a port for development. To do this, you can either run `npm start` with an additional flag:
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-```
-npm start -- -p 3000
-```
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
 
-Or edit the `start` script directly:
+### `npm test`
 
-```
-parcel index.html -p 3000
-```
+Launches the test runner in the interactive watch mode.<br />
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-## Adding styles
+### `npm run build`
 
-You can use CSS files with simple ES2015 `import` statements anywhere in your Javascript:
+Builds the app for production to the `build` folder.<br />
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-```js
-import "./index.css";
-```
+The build is minified and the filenames include the hashes.<br />
+Your app is ready to be deployed!
 
-## Babel transforms
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-The Babel preset [babel-preset-nano-react-app](https://github.com/nano-react-app/babel-preset-nano-react-app) is used to support the same transforms that Create React App supports.
+### `npm run eject`
 
-The Babel configuration lives inside `package.json` and will override an external `.babelrc` file, so if you want to use `.babelrc` remember to delete the `babel` property inside `package.json`.
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-## Deploy to GitHub Pages
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You can also deploy your project using GitHub pages.
-First install the `gh-pages` [package](https://github.com/tschaub/gh-pages):
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-`npm i -D gh-pages`
+## Learn More
 
-With Parcel's `--public-url` flag, use the following scripts for deployment:
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-```
-"scripts": {
-  "start": "parcel index.html",
-  "build": "parcel build index.html --public-url '.'",
-  "predeploy": "rm -rf dist && parcel build index.html --public-url '.'",
-  "deploy": "gh-pages -d dist"
-},
-```
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-Then follow the normal procedure in GitHub Pages and select the `gh-pages` branch.
+### Code Splitting
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+
+### Analyzing the Bundle Size
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+
+### Making a Progressive Web App
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+
+### Advanced Configuration
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+
+### Deployment
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+
+### `npm run build` fails to minify
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
