@@ -1,0 +1,25 @@
+.completeCheckBox {
+  background-color: lightgray;
+  border-radius: 5px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  margin-right: 10px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.completeCheckBox:hover {
+  background-color: darkgray;
+  transition: background-color 0.15s;
+}
+
+.checkMark {
+  width: 10px;
+  height: 16px;
+  background-color: rgba(0, 0, 0, 0);
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+  display: none;
+}

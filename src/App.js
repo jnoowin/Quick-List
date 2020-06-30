@@ -1,84 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import Accordion from "./components/Accordion";
-
-const Todo = ({ todo, index, completeTodo, removeTodo }) => {
-  const accordionChange = () => {
-    console.log("popp")
-  }
-  
-  return(
-    <div 
-      className = "todo"
-      style = {{ textDecoration: todo.isCompleted ? "line-through" : "" }}
-      onClick = {() => accordionChange()}
-      >
-      {todo.text}
-      <div className = "buttonDiv">
-        <button
-          className = "button"
-          onClick = {() => completeTodo(index)}
-          >
-          Complete
-        </button>
-        <button
-          className = "button"
-          onClick = {() => removeTodo(index)}
-          >
-          x
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function TodoForm({ addTodo }) {
-  const[value, setValue] = useState("");
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    if(!value) return;
-    addTodo(value);
-    setValue("");
-  };
-  
-  return(
-    <div>  
-      <form 
-        onSubmit = {handleSubmit}
-        className = "form"
-        >
-        <input
-          style = {{ display:"inline"}}
-          className = "input"
-          type = "text"
-          value = {value}
-          onChange = {e => setValue(e.target.value)}/>
-          <button 
-            className = "enterButton"
-            onClick = {handleSubmit}
-            >Enter
-          </button>
-      </form>
-    </div>
-  );
-}
+import TodoForm from "./components/TodoForm/TodoForm";
+import TodoList from "./components/TodoList/TodoList";
 
 export default function App() {
   const[todos, setTodos] = useState([
-    { text: "Learn about React", 
+    { title: "Learn about React",
+      text: "Spend 10 minutes", 
       isCompleted: false
     },
-    { text: "Meet friend for lunch", 
+    { title: "Meet friend for lunch", 
+      text: "Talk about stuff" ,
       isCompleted: false
     },
-    { text: "Build really cool todo app",
+    { title: "Build really cool todo app",
+      text: "Learn about hooks",
       isCompleted: false
     }
   ]);
 
+  useEffect(() => {
+    document.title = `To-do List App(${todos.length})`;
+  }, [todos.length]);
+
   const addTodo = text => {
-    const newTodos = [...todos, { text }];
+    const newTodos = [...todos, { title: text }];
     setTodos(newTodos);
   };
 
@@ -105,15 +51,14 @@ export default function App() {
       </div>
       <div>
         <div className = "todo-list">
-          {todos.map((todo, index) => (
-            <Todo
-              key = {index}
-              index = {index}
-              todo = {todo}
-              completeTodo = {completeTodo}
-              removeTodo = {removeTodo}
-            />
-          ))}
+          <TodoList
+            todos = {todos}
+            completeTodo = {completeTodo}
+            removeTodo = {removeTodo}
+          >
+          </TodoList>
+        </div>
+        <div className = "todo-list">
           <TodoForm 
             addTodo = {addTodo}
           />
@@ -121,4 +66,4 @@ export default function App() {
       </div>
     </div>
   );
-}
+};
