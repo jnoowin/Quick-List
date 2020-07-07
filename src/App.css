@@ -23,7 +23,9 @@
   display: flex;
   flex-direction: column;
   margin-left: 1vw;
-  max-width: 30%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .ul {

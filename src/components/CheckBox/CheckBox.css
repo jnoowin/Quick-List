@@ -6,7 +6,6 @@
   display: flex;
   margin-right: 10px;
   justify-content: center;
-  align-items: flex-start;
 }
 
 .completeCheckBox:hover {

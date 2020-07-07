@@ -2,29 +2,30 @@
     align-items: center;
     background: #fff;
     display: flex;
+    border-bottom: thin solid rgb(200, 200, 200);
 }
 
 .input {
     align-items: baseline;
     border-width: 0px;
-    display: inline;
-    color: rgb(97, 95, 95);
-    font-size: 22px;
-    font-family: Open-sans, sans-serif;
-    flex-grow: 3;
+    display: flex;
+    font-size: 18px;
+    font-family: "Open-sans", sans-serif;
+    padding: 12px;
+    color: #444;
+    font-weight: bold;
+    flex: auto;
 }
 
 .enterButton {
     background-color: white;
     border-width: 0px;
-    color: rgb(97, 95, 95);
+    color: rgb(95, 95, 95);
     font-size: 16px;
-    font-family: Open-sans, sans-serif;
-    display: inline-table;
+    font-weight:bold;
+    font-family: "Open-sans", sans-serif;
     cursor: pointer;
-    flex-grow: 1;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding: 8px 28px;
 }
 
 .enterButton:hover{

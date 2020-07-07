@@ -39,6 +39,10 @@ export default function Accordion({ index, todo, completeTodo, removeTodo }) {
                     className = "accordionText"
                     >
                     {todo.text}
+                    <br></br>
+                    {todo.location}
+                    <br></br>
+                    {todo.date}
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 .accordionDiv {
   display: flex;
   flex-direction: column;
-  flex-grow: 3;
+  flex: auto;
 }
 
 .accordion {
@@ -10,10 +10,7 @@
   cursor: pointer;
   padding: 18px;
   display: flex;
-  align-items: center;
   flex-direction: row;
-  border: none;
-  outline: none;
 }
 
 .accordion:hover,
@@ -31,7 +28,7 @@
 
 .accordionContent {
   background-color: white;
-  overflow: auto;
+  overflow-y: scroll;
   max-height: 0px;
   transition: max-height 0.3s ease;
 }
