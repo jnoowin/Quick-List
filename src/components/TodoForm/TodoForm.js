@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "./TodoForm.css";
 import { EnterOutlined, PlusCircleOutlined } from '@ant-design/icons';
 
-export default function TodoForm({ addTodo }) {
+export default function TodoForm({ addTodo, inputRef }) {
     const[value, setValue] = useState("");
   
     const handleSubmit = e => {
@@ -20,11 +20,12 @@ export default function TodoForm({ addTodo }) {
           >
           <PlusCircleOutlined style = {{ fontSize: "25px" }}/>
           <input
-            className = "input"
+            className = "todoInput"
             type = "text"
             value = {value}
             onChange = {e => setValue(e.target.value)}
             placeholder = "Enter to-do title"
+            ref = {inputRef}
             />
             
             <button 

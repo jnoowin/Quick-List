@@ -5,7 +5,7 @@
     border-bottom: thin solid rgb(200, 200, 200);
 }
 
-.input {
+.todoInput {
     align-items: baseline;
     border-width: 0px;
     display: flex;

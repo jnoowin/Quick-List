@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import TodoForm from "./components/TodoForm/TodoForm";
 import TodoList from "./components/TodoList/TodoList";
@@ -6,12 +6,12 @@ import TodoCalendar from "./components/TodoCalendar/TodoCalendar";
 
 export default function App() {
   const[todos, setTodos] = useState([
-    // { title: "Learn about React",
-    //   text: "Spend 10 minutes",
-    //   location: "Cafe",
-    //   date: "7/6/2020", 
-    //   isCompleted: false
-    // },
+    { title: "Learn about React",
+      text: "Spend 10 minutes",
+      location: "Cafe",
+      date: "07-08-2020", 
+      isCompleted: false
+    },
     // { title: "Meet friend for lunch", 
     //   text: "Talk about stuff" ,
     //   isCompleted: false
@@ -23,11 +23,13 @@ export default function App() {
   ]);
 
   useEffect(() => {
-    document.title = todos.length > 0 ? `To-do List App(${todos.length})` : "To-do List App";
+    document.title = todos.length > 0 ? `(${todos.length})To-do List App` : "To-do List App";
   }, [todos.length]);
 
-  const addTodo = text => {
-    const newTodos = [...todos, { title: text }];
+  const inputRef = useRef(null);
+
+  const addTodo = title => {
+    const newTodos = [...todos, { title: title }];
     setTodos(newTodos);
   };
 
@@ -52,20 +54,22 @@ export default function App() {
           </ul>
         </div>
       </div>
-      <div style = {{ display: "flex", flexDirection: "row"}}>
+      <div style = {{ display: "flex", flexDirection: "row" }}>
         <div className = "todo-list">
+            <TodoForm 
+              addTodo = {addTodo}
+              inputRef = {inputRef}
+            />
             <TodoList
               todos = {todos}
               completeTodo = {completeTodo}
               removeTodo = {removeTodo}
             >
             </TodoList>
-            <TodoForm 
-              addTodo = {addTodo}
-            />
         </div>
         <TodoCalendar
           todos = {todos}
+          inputRef = {inputRef}
         />
       </div>
     </div>
