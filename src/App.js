@@ -11,15 +11,15 @@ export default function App() {
       location: "Cafe",
       date: "07-08-2020", 
       isCompleted: false
+    },    
+    { title: "Meet friend for lunch", 
+      text: "Talk about stuff" ,
+      isCompleted: false
     },
-    // { title: "Meet friend for lunch", 
-    //   text: "Talk about stuff" ,
-    //   isCompleted: false
-    // },
-    // { title: "Build really cool todo app",
-    //   text: "Learn about hooks",
-    //   isCompleted: false
-    // }
+    { title: "Build really cool todo app",
+      text: "Learn about hooks",
+      isCompleted: false
+    }
   ]);
 
   useEffect(() => {
@@ -54,8 +54,9 @@ export default function App() {
           </ul>
         </div>
       </div>
-      <div style = {{ display: "flex", flexDirection: "row" }}>
-        <div className = "todo-list">
+      
+      <div className = "todoListDiv">
+        <div className = "todoListSection">
             <TodoForm 
               addTodo = {addTodo}
               inputRef = {inputRef}

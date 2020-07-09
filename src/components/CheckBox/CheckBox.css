@@ -4,7 +4,7 @@
   width: 24px;
   height: 24px;
   display: flex;
-  margin-right: 10px;
+  margin-right: 13px;
   justify-content: center;
 }
 
@@ -18,7 +18,7 @@
   height: 16px;
   background-color: rgba(0, 0, 0, 0);
   border: solid white;
-  border-width: 0 3px 3px 0;
+  border-width: 0 2px 2px 0;
   transform: rotate(45deg);
   display: none;
 }

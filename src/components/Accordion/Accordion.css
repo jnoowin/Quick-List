@@ -8,15 +8,16 @@
   background-color: white;
   color: #444;
   cursor: pointer;
-  padding: 18px;
+  padding: 9px;
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .accordion:hover,
 .true {
   background-color: rgb(240, 240, 240);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.15s ease;
 }
 
 .accordionTitle {
@@ -24,18 +25,22 @@
   font-weight: bold;
   font-size: 18px;
   text-align: left;
+  position: relative;
+  transform: translateY(30%);
 }
 
 .accordionContent {
   background-color: white;
-  overflow-y: scroll;
+  overflow: hidden;
   max-height: 0px;
-  transition: max-height 0.3s ease;
+  transition: max-height 0.15s ease;
 }
 
-.accordionText {
+.removeButton {
+  border-width: 0px;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
   font-family: "Open Sans", sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  padding: 18px;
+  font-size: 20px;
+  font-weight: bold;
 }

@@ -18,13 +18,13 @@ export default function TodoForm({ addTodo, inputRef }) {
           onSubmit = {handleSubmit}
           className = "form"
           >
-          <PlusCircleOutlined style = {{ fontSize: "25px" }}/>
+          <PlusCircleOutlined style = {{ fontSize: "25px", marginLeft: "9px" }}/>
           <input
             className = "todoInput"
             type = "text"
             value = {value}
-            onChange = {e => setValue(e.target.value)}
-            placeholder = "Enter to-do title"
+            onChange = {e => setValue(e.target.value.length < 40 ? e.target.value : e.target.value.slice(0, e.target.value.length - 1))}
+            placeholder = "Add to-do"
             ref = {inputRef}
             />
             

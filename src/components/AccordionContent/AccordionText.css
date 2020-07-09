@@ -1,0 +1,23 @@
+.accordionText {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .descriptionSection {
+    display: flex; 
+    flex-direction: row;
+  }
+
+  .descriptionText {
+    max-width: 90%;
+    overflow-wrap: break-word;
+  }
+
+  .optionBar {
+      display: flex;
+      justify-content: flex-end;
+  }

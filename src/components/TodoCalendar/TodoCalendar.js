@@ -10,9 +10,9 @@ export default function TodoCalendar({ todos, inputRef }) {
     const dateCellRender = (value) =>{
         return(
             <ul>
-                {todos.map((todo) => (
+                {todos.map((todo, index) => (
                     value.format("MM-DD-YYYY") === todo.date ?
-                    <li>
+                    <li key = {`${value.format("MM-DD-YYYY") + index}`}>
                         {todo.title}
                     </li>
                     :
@@ -24,7 +24,7 @@ export default function TodoCalendar({ todos, inputRef }) {
     
     return(
         <Calendar 
-            style = {{ maxWidth: "75%", marginRight: "1vw" }}
+            style = {{ width: "70%", maxWidth: "70%", marginRight: "1vw" }}
             dateCellRender  = { dateCellRender }
             onSelect = { onSelect }
         >

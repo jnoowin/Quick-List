@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef} from 'react';
 import "./Accordion.css";
 import CheckBox from "../CheckBox/CheckBox";
+import AccordionContent from "../AccordionContent/AccordionContent"
 
 export default function Accordion({ index, todo, completeTodo, removeTodo }) {
     const [active, setActive] = useState(false);
@@ -16,7 +17,10 @@ export default function Accordion({ index, todo, completeTodo, removeTodo }) {
 
     return(
         <div className = "accordionDiv">
-            <div className = {`accordion ${active}`} onClick = {changeAccordion}>
+            <div 
+                className = {`accordion ${active}`} 
+                onClick = {changeAccordion}
+            >
                 <CheckBox 
                         completeTodo = {completeTodo}
                         index = {index}
@@ -29,21 +33,17 @@ export default function Accordion({ index, todo, completeTodo, removeTodo }) {
                     >
                     {todo.title}
                 </p> 
-          
             </div> 
             <div 
                 className = "accordionContent"
                 ref = {contentRef}
                 >
-                <div 
-                    className = "accordionText"
+                    <AccordionContent
+                        index = {index}
+                        todo = {todo}
+                        removeTodo = {removeTodo}
                     >
-                    {todo.text}
-                    <br></br>
-                    {todo.location}
-                    <br></br>
-                    {todo.date}
-                </div>
+                    </AccordionContent>
             </div>
         </div>
     )
