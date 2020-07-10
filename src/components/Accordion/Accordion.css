@@ -31,9 +31,15 @@
 
 .accordionContent {
   background-color: white;
-  overflow: hidden;
+  overflow-y: hidden;
   max-height: 0px;
   transition: max-height 0.15s ease;
+}
+
+.chevron {
+  flex: auto; 
+  display: flex;
+  justify-content: flex-end;
 }
 
 .removeButton {

@@ -1,0 +1,21 @@
+.inputValue {
+    border-width: 0px;
+    border-bottom: 2px solid rgb(200, 200, 200);
+    border-radius: 3px;
+    padding: 5px;
+    background-color: rgb(240, 240, 240);
+    flex: auto;
+}
+
+.inputValue:focus {
+    border-color: rgb(100, 140, 250);
+    transition: border-color 0.2s ease-in
+}
+
+.inputArea {
+    border-width: 0px;
+    border-radius: 3px;
+    padding: 5px;
+    background-color: rgb(240, 240, 240);
+    flex: auto;
+}

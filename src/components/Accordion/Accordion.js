@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef} from 'react';
 import "./Accordion.css";
 import CheckBox from "../CheckBox/CheckBox";
-import AccordionContent from "../AccordionContent/AccordionContent"
+import AccordionContent from "../AccordionContent/AccordionContent";
+import { DownOutlined } from '@ant-design/icons';
 
-export default function Accordion({ index, todo, completeTodo, removeTodo }) {
+export default function Accordion({ index, todo, completeTodo, removeTodo, editTodo }) {
     const [active, setActive] = useState(false);
     const contentRef = useRef(null);
 
@@ -32,7 +33,16 @@ export default function Accordion({ index, todo, completeTodo, removeTodo }) {
                     style = {{ textDecoration: todo.isCompleted ? "line-through" : "" }}
                     >
                     {todo.title}
-                </p> 
+                </p>
+                <div className = "chevron" >
+                    <DownOutlined 
+                        style = {{
+                            fontSize: "20px", 
+                            transform: active ? "rotate(180deg)": "rotate(0deg)",
+                            transition: "transform 0.2s ease"
+                        }} 
+                    />
+                </div>
             </div> 
             <div 
                 className = "accordionContent"
@@ -42,6 +52,9 @@ export default function Accordion({ index, todo, completeTodo, removeTodo }) {
                         index = {index}
                         todo = {todo}
                         removeTodo = {removeTodo}
+                        editTodo = {editTodo}
+                        contentRef = {contentRef}
+                        active = {active}
                     >
                     </AccordionContent>
             </div>

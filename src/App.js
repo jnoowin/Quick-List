@@ -8,15 +8,19 @@ export default function App() {
   const[todos, setTodos] = useState([
     { title: "Learn about React",
       text: "Spend 10 minutes",
-      location: "Cafe",
+      location: "",
       date: "07-08-2020", 
       isCompleted: false
     },    
-    { title: "Meet friend for lunch", 
+    { title: "Meet friend for lunch",
+      location: "Cafe",
+      date: "07-09-2020",
       text: "Talk about stuff" ,
       isCompleted: false
     },
     { title: "Build really cool todo app",
+      location: "School",
+      date: "07-10-2020",
       text: "Learn about hooks",
       isCompleted: false
     }
@@ -28,8 +32,9 @@ export default function App() {
 
   const inputRef = useRef(null);
 
-  const addTodo = title => {
-    const newTodos = [...todos, { title: title }];
+  const addTodo = newTitle => {
+    const newTodos = [...todos];
+    newTodos.unshift({ title: newTitle });
     setTodos(newTodos);
   };
 
@@ -43,6 +48,12 @@ export default function App() {
     const newTodos = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
+  };
+
+  const editTodo = (index, newTitle, newLocation, newDate, newText) => {
+    const newTodos = [...todos];
+    newTodos[index] = { title: newTitle, location: newLocation, date: newDate, text: newText};
+    setTodos(newTodos)
   };
 
   return(
@@ -65,6 +76,7 @@ export default function App() {
               todos = {todos}
               completeTodo = {completeTodo}
               removeTodo = {removeTodo}
+              editTodo = {editTodo}
             >
             </TodoList>
         </div>
