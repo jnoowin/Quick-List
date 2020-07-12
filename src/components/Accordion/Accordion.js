@@ -4,13 +4,9 @@ import CheckBox from "../CheckBox/CheckBox";
 import AccordionContent from "../AccordionContent/AccordionContent";
 import { DownOutlined } from '@ant-design/icons';
 
-export default function Accordion({ index, todo, completeTodo, removeTodo, editTodo }) {
+export default function Accordion({ index, todo, completeTodo, removeTodo, editTodo, calendarDate, setCalendarDate }) {
     const [active, setActive] = useState(false);
     const contentRef = useRef(null);
-
-    useEffect(() => {
-        contentRef.current.style.maxHeight = active ? `${contentRef.current.scrollHeight}px` : "0px";
-    }, [contentRef, active]);
 
     const changeAccordion = () => {
         setActive(!active);
@@ -55,6 +51,8 @@ export default function Accordion({ index, todo, completeTodo, removeTodo, editT
                         editTodo = {editTodo}
                         contentRef = {contentRef}
                         active = {active}
+                        calendarDate = {calendarDate}
+                        setCalendarDate = {setCalendarDate}
                     >
                     </AccordionContent>
             </div>

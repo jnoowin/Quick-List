@@ -3,7 +3,7 @@ import "./AccordionContent.css";
 import EditInput from "../EditInput/EditInput";
 import { DeleteOutlined, CalendarOutlined, AlignLeftOutlined, PushpinOutlined, EditOutlined } from "@ant-design/icons"
 
-export default function AccordionContent({ index, todo, removeTodo, editTodo, contentRef, active }) {
+export default function AccordionContent({ index, todo, removeTodo, editTodo, contentRef, active, calendarDate, setCalendarDate }) {
     const [editOn, setEditOn] = useState(false);
     const [title, setTitle] = useState(todo.title);
     const [location, setLocation] = useState(todo.location);
@@ -81,6 +81,8 @@ export default function AccordionContent({ index, todo, removeTodo, editTodo, co
                     editOn = {editOn}
                     setEditValue = {setDate}
                     editValue = {date}
+                    calendarDate = {calendarDate}
+                    setCalendarDate = {setCalendarDate}
                 />
             </div>
             
@@ -118,7 +120,7 @@ export default function AccordionContent({ index, todo, removeTodo, editTodo, co
                     onClick = {() => setEditOn(!editOn)}
                 />
                 <DeleteOutlined 
-                    style = {{ fontSize: "26px", color: "" }} 
+                    style = {{ fontSize: "26px"}} 
                     onClick = {() => {removeTodo(index)}}
                 />
             </div>

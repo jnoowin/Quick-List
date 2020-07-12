@@ -3,6 +3,7 @@ import "./App.css";
 import TodoForm from "./components/TodoForm/TodoForm";
 import TodoList from "./components/TodoList/TodoList";
 import TodoCalendar from "./components/TodoCalendar/TodoCalendar";
+const shortid = require('shortid');
 
 export default function App() {
   const[todos, setTodos] = useState([
@@ -10,31 +11,43 @@ export default function App() {
       text: "Spend 10 minutes",
       location: "",
       date: "07-08-2020", 
-      isCompleted: false
+      isCompleted: false,
+      id: shortid.generate()
     },    
     { title: "Meet friend for lunch",
       location: "Cafe",
       date: "07-09-2020",
       text: "Talk about stuff" ,
-      isCompleted: false
+      isCompleted: false,
+      id: shortid.generate()
     },
     { title: "Build really cool todo app",
       location: "School",
       date: "07-10-2020",
       text: "Learn about hooks",
-      isCompleted: false
+      isCompleted: false,
+      id: shortid.generate()
     }
   ]);
+  
+  const [calendarDate, setCalendarDate] = useState("");
+
+  const todoInputRef = useRef(null);
 
   useEffect(() => {
     document.title = todos.length > 0 ? `(${todos.length})To-do List App` : "To-do List App";
   }, [todos.length]);
-
-  const inputRef = useRef(null);
-
+  
   const addTodo = newTitle => {
     const newTodos = [...todos];
-    newTodos.unshift({ title: newTitle });
+    newTodos.unshift({ 
+      title: newTitle,
+      text: "",
+      location: "",
+      date: calendarDate, 
+      isCompleted: false,
+      id: shortid.generate()
+    });
     setTodos(newTodos);
   };
 
@@ -52,7 +65,12 @@ export default function App() {
 
   const editTodo = (index, newTitle, newLocation, newDate, newText) => {
     const newTodos = [...todos];
-    newTodos[index] = { title: newTitle, location: newLocation, date: newDate, text: newText};
+    Object.assign(newTodos[index], {
+      title: newTitle, 
+      location: newLocation,
+      date: newDate, 
+      text: newText, 
+    });
     setTodos(newTodos)
   };
 
@@ -70,19 +88,23 @@ export default function App() {
         <div className = "todoListSection">
             <TodoForm 
               addTodo = {addTodo}
-              inputRef = {inputRef}
+              todoInputRef = {todoInputRef}
             />
             <TodoList
               todos = {todos}
               completeTodo = {completeTodo}
               removeTodo = {removeTodo}
               editTodo = {editTodo}
+              calendarDate = {calendarDate}
+              setCalendarDate = {setCalendarDate}
             >
             </TodoList>
         </div>
         <TodoCalendar
           todos = {todos}
-          inputRef = {inputRef}
+          todoInputRef = {todoInputRef}
+          calendarDate = {calendarDate}
+          setCalendarDate = {setCalendarDate}
         />
       </div>
     </div>
