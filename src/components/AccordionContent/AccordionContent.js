@@ -5,11 +5,13 @@ import { DeleteOutlined, CalendarOutlined, AlignLeftOutlined, PushpinOutlined, E
 
 export default function AccordionContent({ index, todo, removeTodo, editTodo, contentRef, active, calendarDate, setCalendarDate }) {
     const [editOn, setEditOn] = useState(false);
-    const [title, setTitle] = useState(todo.title);
-    const [location, setLocation] = useState(todo.location);
-    const [date, setDate] = useState(todo.date);
-    const [text, setText] = useState(todo.text);
-    
+    const[editedTodo, setEditedTodo] = useState({
+        title: todo.title, 
+        location: todo.location,
+        date: todo.date, 
+        text: todo.text, 
+    });
+
     useEffect(() => {
         contentRef.current.style.maxHeight = active ? `${contentRef.current.scrollHeight}px` : "0px";
     }, [contentRef, active, editOn]);
@@ -31,18 +33,24 @@ export default function AccordionContent({ index, todo, removeTodo, editTodo, co
     };
     const displayStyle = {display: editOn ? "none": "block"}
 
-    const handleClick = (e, index) => {
+    const saveClick = (e, editedTodo, index, calendarDate) => {
         e.preventDefault();
-        editTodo(index, title, location, date, text);
+        editTodo(index, {...editedTodo, date: calendarDate});
         setEditOn(!editOn);
     };
+
+    const editClick = initDate => {
+        setCalendarDate(initDate);
+        setEditOn(!editOn);
+    };
+
     return(
         <div className = "accordionText">
             <div className = "locationSection">
                 <PushpinOutlined 
                     style = {{
                         ...iconStyle, 
-                        display: (editOn || (location !== "")) ? "block": "none"
+                        display: (editOn || (todo.location !== "")) ? "block": "none"
                     }}
                 />
                 
@@ -56,8 +64,8 @@ export default function AccordionContent({ index, todo, removeTodo, editTodo, co
                 <EditInput
                     inputType = "location"
                     editOn = {editOn}
-                    setEditValue = {setLocation}
-                    editValue = {location}
+                    editedTodo = {editedTodo} 
+                    setEditedTodo = {setEditedTodo}
                 />
             </div>
             
@@ -65,7 +73,7 @@ export default function AccordionContent({ index, todo, removeTodo, editTodo, co
                 <CalendarOutlined 
                     style = {{
                         ...iconStyle, 
-                        display: (editOn || (date !== "")) ? "block": "none"
+                        display: (editOn || (todo.date !== "")) ? "block": "none"
                     }}
                 />
                 
@@ -79,9 +87,9 @@ export default function AccordionContent({ index, todo, removeTodo, editTodo, co
                 <EditInput
                     inputType = "date"
                     editOn = {editOn}
-                    setEditValue = {setDate}
-                    editValue = {date}
                     calendarDate = {calendarDate}
+                    editedTodo = {editedTodo} 
+                    setEditedTodo = {setEditedTodo}
                     setCalendarDate = {setCalendarDate}
                 />
             </div>
@@ -90,7 +98,7 @@ export default function AccordionContent({ index, todo, removeTodo, editTodo, co
                 <AlignLeftOutlined 
                     style = {{
                         ...iconStyle, 
-                        display: (editOn || (text !== "")) ? "block": "none"
+                        display: (editOn || (todo.text !== "")) ? "block": "none"
                     }}
                 />
                 <div 
@@ -102,22 +110,22 @@ export default function AccordionContent({ index, todo, removeTodo, editTodo, co
                 <EditInput
                     inputType = "text"
                     editOn = {editOn}
-                    setEditValue = {setText}
-                    editValue = {text}
+                    editedTodo = {editedTodo} 
+                    setEditedTodo = {setEditedTodo}
                 />
             </div>
             
-            <div className = "optionBar">
+            <div className = "optionBar" id="optionBarID">
                 <button
                     className = "saveButton"
                     style = {{ display: editOn ? "block": "none" }}
-                    onClick = {(e) => handleClick(e, index)}
-                >
-                    Save
+                    onClick = {e => saveClick(e, editedTodo, index, calendarDate)}
+                    >
+                        Save
                 </button>
                 <EditOutlined 
                     style = {editIconStyle}
-                    onClick = {() => setEditOn(!editOn)}
+                    onClick = {() => editClick(todo.date)}
                 />
                 <DeleteOutlined 
                     style = {{ fontSize: "26px"}} 

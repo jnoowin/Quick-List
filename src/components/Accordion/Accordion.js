@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useRef} from 'react';
 import "./Accordion.css";
 import CheckBox from "../CheckBox/CheckBox";
 import AccordionContent from "../AccordionContent/AccordionContent";
