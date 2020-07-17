@@ -6,7 +6,7 @@ export default function TodoCalendar({ todos, todoInputRef, setCalendarDate }) {
     
     const onSelect = (value) => {
         todoInputRef.current.focus();
-        setCalendarDate(value.format("MM-DD-YYYY"));
+        setCalendarDate(value.format("M-D-YYYY"));
     };
 
     const calendarStyle = {
@@ -19,8 +19,8 @@ export default function TodoCalendar({ todos, todoInputRef, setCalendarDate }) {
         return(
             <ul>
                 {todos.map((todo, index) => (
-                    value.format("MM-DD-YYYY") === todo.date ?
-                    <li key = {`${value.format("MM-DD-YYYY") + index}`}>
+                    value.format("M-D-YYYY") === todo.date ?
+                    <li key = {`${value.format("M-D-YYYY") + index}`}>
                         {todo.title}
                     </li>
                     :

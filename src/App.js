@@ -8,31 +8,8 @@ const firebase = require("firebase");
 const shortid = require('shortid');
 
 export default function App() {
-  const[todos, setTodos] = useState([
-    { title: "Learn React",
-      text: "Spend 10 minutes",
-      location: "",
-      date: "07-16-2020", 
-      isCompleted: false,
-      id: shortid.generate()
-    },    
-    { title: "Meet friends for lunch",
-      location: "Cafe",
-      date: "07-16-2020",
-      text: "Talk about stuff" ,
-      isCompleted: false,
-      id: shortid.generate()
-    },
-    { title: "Study for CS",
-      location: "School",
-      date: "07-16-2020",
-      text: "Learn about hooks",
-      isCompleted: false,
-      id: shortid.generate()
-    },
-    
-  ]);
-  
+  const[todos, setTodos] = useState([]);
+
   const [calendarDate, setCalendarDate] = useState("");
 
   const todoInputRef = useRef(null);
@@ -40,7 +17,18 @@ export default function App() {
   useEffect(() => {
     document.title = todos.length > 0 ? `(${todos.length})To-do List App` : "To-do List App";
   }, [todos.length]);
-  
+
+  useEffect(() => {
+    firebase.database().ref("user/blarghnog/todos")
+    .once('value', snapshot => {
+        let firebaseTodos = []
+        for(let todo in snapshot.val()){
+          firebaseTodos.push(snapshot.val()[todo]);
+        }
+        setTodos(firebaseTodos)
+      });   
+  }, []);
+
   const addTodo = newTitle => {
     const newTodos = [...todos];
     newTodos.unshift({ 
@@ -52,13 +40,7 @@ export default function App() {
       id: shortid.generate()
     });
     setTodos(newTodos);
-    firebase.database().ref(`user/blarghnog/todos/${newTodos[0].title + newTodos[0].id}`).push(newTodos[0]);
-  };
-
-  const completeTodo = index => {
-    const newTodos = [...todos];
-    newTodos[index].isCompleted = !newTodos[index].isCompleted;
-    setTodos(newTodos);
+    firebase.database().ref('user/blarghnog/todos/').child(newTodos[0].title + newTodos[0].id).set(newTodos[0]);
   };
 
   const removeTodo = index => {
@@ -66,14 +48,14 @@ export default function App() {
     const refTodo = newTodos[index];
     newTodos.splice(index, 1);
     setTodos(newTodos);
-    firebase.database().ref(`user/blarghnog/todos/${refTodo.title + refTodo.id}`).remove()
+    firebase.database().ref('user/blarghnog/todos/').child(refTodo.title + refTodo.id).remove()
   };
 
   const editTodo = (index, editedTodo) => {
     const newTodos = [...todos];
     Object.assign(newTodos[index], editedTodo);
     setTodos(newTodos);
-    firebase.database().ref(`user/blarghnog/todos/${newTodos[index].title + newTodos[index].id}`).set(newTodos[index]);
+    firebase.database().ref('user/blarghnog/todos/').child(newTodos[index].title + newTodos[index].id).set(newTodos[index]);
   };
 
   return(
@@ -94,7 +76,6 @@ export default function App() {
             />
             <TodoList
               todos = {todos}
-              completeTodo = {completeTodo}
               removeTodo = {removeTodo}
               editTodo = {editTodo}
               calendarDate = {calendarDate}

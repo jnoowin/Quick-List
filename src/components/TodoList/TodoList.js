@@ -2,7 +2,7 @@ import React from 'react';
 import Todo from "../Todo/Todo";
 
 
-export default function TodoList({ todos, completeTodo, removeTodo, editTodo, calendarDate, setCalendarDate }) {
+export default function TodoList({ todos, removeTodo, editTodo, calendarDate, setCalendarDate }) {
     return(
         <div>
             {todos.map((todo, index) => (
@@ -10,7 +10,6 @@ export default function TodoList({ todos, completeTodo, removeTodo, editTodo, ca
                         key = {todo.id}
                         index = {index}
                         todo = {todo}
-                        completeTodo = {completeTodo}
                         removeTodo = {removeTodo}
                         editTodo = {editTodo}
                         calendarDate = {calendarDate}

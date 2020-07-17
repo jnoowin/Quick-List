@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "./AccordionContent.css";
 import EditInput from "../EditInput/EditInput";
 import { DeleteOutlined, CalendarOutlined, AlignLeftOutlined, PushpinOutlined, EditOutlined } from "@ant-design/icons"
+const moment = require('moment');
 
 export default function AccordionContent({ index, todo, removeTodo, editTodo, contentRef, active, calendarDate, setCalendarDate }) {
     const [editOn, setEditOn] = useState(false);
@@ -33,9 +34,12 @@ export default function AccordionContent({ index, todo, removeTodo, editTodo, co
     };
     const displayStyle = {display: editOn ? "none": "block"}
 
-    const saveClick = (e, editedTodo, index, calendarDate) => {
+    const saveClick = (e, editedTodo, index, calendarDate, todo) => {
         e.preventDefault();
-        editTodo(index, {...editedTodo, date: calendarDate});
+        if(moment(calendarDate, 'M-D-YYY', true).isValid() || calendarDate === "")
+            editTodo(index, {...editedTodo, date: calendarDate});
+        else
+            setCalendarDate(todo.date)
         setEditOn(!editOn);
     };
 
@@ -119,7 +123,7 @@ export default function AccordionContent({ index, todo, removeTodo, editTodo, co
                 <button
                     className = "saveButton"
                     style = {{ display: editOn ? "block": "none" }}
-                    onClick = {e => saveClick(e, editedTodo, index, calendarDate)}
+                    onClick = {e => saveClick(e, editedTodo, index, calendarDate, todo)}
                     >
                         Save
                 </button>

@@ -4,7 +4,7 @@ import CheckBox from "../CheckBox/CheckBox";
 import AccordionContent from "../AccordionContent/AccordionContent";
 import { DownOutlined } from '@ant-design/icons';
 
-export default function Accordion({ index, todo, completeTodo, removeTodo, editTodo, calendarDate, setCalendarDate }) {
+export default function Accordion({ index, todo, removeTodo, editTodo, calendarDate, setCalendarDate }) {
     const [active, setActive] = useState(false);
     const contentRef = useRef(null);
 
@@ -19,9 +19,9 @@ export default function Accordion({ index, todo, completeTodo, removeTodo, editT
                 onClick = {changeAccordion}
             >
                 <CheckBox 
-                        completeTodo = {completeTodo}
+                        todo = {todo}
+                        editTodo = {editTodo}
                         index = {index}
-                        isCompleted = {todo.isCompleted}
                     >
                 </CheckBox>
                 <p 
