@@ -63,7 +63,7 @@ export default function App() {
       <div className = "nav-div">
         <div className = "navbar">
           <ul className = "ul">
-            <li>To-do List</li>
+            <li>Quick-List</li>
           </ul>
         </div>
       </div>

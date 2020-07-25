@@ -8,6 +8,11 @@ export default function Accordion({ index, todo, removeTodo, editTodo, calendarD
     const [active, setActive] = useState(false);
     const contentRef = useRef(null);
 
+    const titleStyle = {
+        textDecoration: todo.isCompleted ? "line-through" : "",
+        color: todo.isCompleted ? "darkGrey": "black"
+    };
+
     const changeAccordion = () => {
         setActive(!active);
     };
@@ -26,7 +31,7 @@ export default function Accordion({ index, todo, removeTodo, editTodo, calendarD
                 </CheckBox>
                 <p 
                     className = "accordionTitle"
-                    style = {{ textDecoration: todo.isCompleted ? "line-through" : "" }}
+                    style = {titleStyle}
                     >
                     {todo.title}
                 </p>

@@ -1,4 +1,5 @@
 import React from 'react';
+import CalendarListItem from '../CalendarListItem/CalendarListItem';
 import { Calendar } from 'antd';
 import 'antd/dist/antd.css';
 
@@ -18,11 +19,12 @@ export default function TodoCalendar({ todos, todoInputRef, setCalendarDate }) {
     const dateCellRender = (value) =>{
         return(
             <ul>
-                {todos.map((todo, index) => (
+                {todos.map(todo => (
                     value.format("M-D-YYYY") === todo.date ?
-                    <li key = {`${value.format("M-D-YYYY") + index}`}>
-                        {todo.title}
-                    </li>
+                    <CalendarListItem 
+                        key = {todo.id}
+                        title = {todo.title}
+                    />
                     :
                     null
                 ))}
