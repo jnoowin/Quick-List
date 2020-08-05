@@ -2,7 +2,7 @@ import React from 'react';
 import Accordion from "../Accordion/Accordion";
 import "./Todo.css";
 
-export default function Todo({ index, todo, removeTodo, editTodo, calendarDate, setCalendarDate }) {  
+export default function Todo({ index, todo, removeTodo, editTodo, calendarDate }) {  
     return(
       <div className = "todo">
         <Accordion
@@ -11,7 +11,6 @@ export default function Todo({ index, todo, removeTodo, editTodo, calendarDate, 
           removeTodo = {removeTodo}
           editTodo = {editTodo}
           calendarDate = {calendarDate}
-          setCalendarDate = {setCalendarDate}
           >
         </Accordion>
       </div>

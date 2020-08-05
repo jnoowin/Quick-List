@@ -4,14 +4,14 @@ import EditInput from "../EditInput/EditInput";
 import { DeleteOutlined, CalendarOutlined, AlignLeftOutlined, PushpinOutlined, EditOutlined } from "@ant-design/icons"
 const moment = require('moment');
 
-export default function AccordionContent({ index, todo, removeTodo, editTodo, contentRef, active, calendarDate, setCalendarDate }) {
-    const [editOn, setEditOn] = useState(false);
-    const[editedTodo, setEditedTodo] = useState({
-        title: todo.title, 
-        location: todo.location,
-        date: todo.date, 
-        text: todo.text, 
-    });
+export default function AccordionContent({ index, todo, removeTodo, editTodo, contentRef, active, calendarDate, editOn, setEditOn, editedTodo, setEditedTodo }) {
+    const [dateValue, setDateValue] = useState("");
+    const [prevCalendarDate, setPrevCalendarDate] = useState("");
+
+    if(prevCalendarDate !== calendarDate){
+        setPrevCalendarDate(calendarDate);
+        setDateValue(calendarDate);
+    }
 
     useEffect(() => {
         contentRef.current.style.maxHeight = active ? `${contentRef.current.scrollHeight}px` : "0px";
@@ -34,17 +34,20 @@ export default function AccordionContent({ index, todo, removeTodo, editTodo, co
     };
     const displayStyle = {display: editOn ? "none": "block"}
 
-    const saveClick = (e, editedTodo, index, calendarDate, todo) => {
+    const saveClick = (e, editedTodo, index, dateValue, todo) => {
         e.preventDefault();
-        if(moment(calendarDate, 'M-D-YYY', true).isValid() || calendarDate === "")
-            editTodo(index, {...editedTodo, date: calendarDate});
-        else
-            setCalendarDate(todo.date)
+        if(moment(dateValue, 'M-D-YYY', true).isValid() || dateValue === ""){
+            editTodo(index, {...editedTodo, date: dateValue});
+        }
+        else{
+            setDateValue(todo.date);
+            
+        }
         setEditOn(!editOn);
     };
 
     const editClick = initDate => {
-        setCalendarDate(initDate);
+        setDateValue(initDate);
         setEditOn(!editOn);
     };
 
@@ -91,10 +94,10 @@ export default function AccordionContent({ index, todo, removeTodo, editTodo, co
                 <EditInput
                     inputType = "date"
                     editOn = {editOn}
-                    calendarDate = {calendarDate}
+                    dateValue = {dateValue}
                     editedTodo = {editedTodo} 
                     setEditedTodo = {setEditedTodo}
-                    setCalendarDate = {setCalendarDate}
+                    setDateValue = {setDateValue}
                 />
             </div>
             
@@ -123,7 +126,7 @@ export default function AccordionContent({ index, todo, removeTodo, editTodo, co
                 <button
                     className = "saveButton"
                     style = {{ display: editOn ? "block": "none" }}
-                    onClick = {e => saveClick(e, editedTodo, index, calendarDate, todo)}
+                    onClick = {e => saveClick(e, editedTodo, index, dateValue, todo)}
                     >
                         Save
                 </button>

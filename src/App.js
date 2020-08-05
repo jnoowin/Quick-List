@@ -10,9 +10,9 @@ const shortid = require('shortid');
 export default function App() {
   const[todos, setTodos] = useState([]);
 
-  const [calendarDate, setCalendarDate] = useState("");
-
   const todoInputRef = useRef(null);
+
+  const [calendarDate, setCalendarDate] = useState("");
 
   useEffect(() => {
     document.title = todos.length > 0 ? `(${todos.length})To-do List App` : "To-do List App";
@@ -67,7 +67,6 @@ export default function App() {
           </ul>
         </div>
       </div>
-      
       <div className = "todoListDiv">
         <div className = "todoListSection">
             <TodoForm 
@@ -79,9 +78,7 @@ export default function App() {
               removeTodo = {removeTodo}
               editTodo = {editTodo}
               calendarDate = {calendarDate}
-              setCalendarDate = {setCalendarDate}
-            >
-            </TodoList>
+            />
         </div>
         <TodoCalendar
           todos = {todos}
