@@ -1,0 +1,7 @@
+.navbar {
+    background-color: rgb(100, 140, 250);
+    position: absolute;
+    top: 0px;
+    height: 80px;
+    width: 100vw;
+  }

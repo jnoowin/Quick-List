@@ -41,7 +41,6 @@ export default function AccordionContent({ index, todo, removeTodo, editTodo, co
         }
         else{
             setDateValue(todo.date);
-            
         }
         setEditOn(!editOn);
     };
@@ -122,7 +121,7 @@ export default function AccordionContent({ index, todo, removeTodo, editTodo, co
                 />
             </div>
             
-            <div className = "optionBar" id="optionBarID">
+            <div className = "optionBar">
                 <button
                     className = "saveButton"
                     style = {{ display: editOn ? "block": "none" }}

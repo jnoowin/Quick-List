@@ -20,7 +20,7 @@ export default function Accordion({ index, todo, removeTodo, editTodo, calendarD
     const titleStyle = {
         textDecoration: todo.isCompleted ? "line-through" : "",
         color: todo.isCompleted ? "darkGrey": "black",
-        display: editOn ? "none" : "block"
+        display: editOn ? "none" : "block",
     };
 
     const changeAccordion = () => {

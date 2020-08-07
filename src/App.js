@@ -1,21 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
+import Navbar from "./components/Navbar/Navbar";
 import TodoForm from "./components/TodoForm/TodoForm";
 import TodoList from "./components/TodoList/TodoList";
 import TodoCalendar from "./components/TodoCalendar/TodoCalendar";
 import './Firebase.js'
 const firebase = require("firebase");
 const shortid = require('shortid');
+const moment = require('moment');
 
 export default function App() {
   const[todos, setTodos] = useState([]);
 
   const todoInputRef = useRef(null);
 
-  const [calendarDate, setCalendarDate] = useState("");
+  const [calendarDate, setCalendarDate] = useState(moment().format("M-D-YYYY"));
 
   useEffect(() => {
-    document.title = todos.length > 0 ? `(${todos.length})To-do List App` : "To-do List App";
+    document.title = todos.length > 0 ? `(${todos.length}) Quick-List` : "Quick-List";
   }, [todos.length]);
 
   useEffect(() => {
@@ -40,7 +42,7 @@ export default function App() {
       id: shortid.generate()
     });
     setTodos(newTodos);
-    firebase.database().ref('user/blarghnog/todos/').child(newTodos[0].title + newTodos[0].id).set(newTodos[0]);
+    firebase.database().ref('user/blarghnog/todos/').child(newTodos[0].id).set(newTodos[0]);
   };
 
   const removeTodo = index => {
@@ -48,24 +50,20 @@ export default function App() {
     const refTodo = newTodos[index];
     newTodos.splice(index, 1);
     setTodos(newTodos);
-    firebase.database().ref('user/blarghnog/todos/').child(refTodo.title + refTodo.id).remove()
+    firebase.database().ref('user/blarghnog/todos/').child(refTodo.id).remove()
   };
 
   const editTodo = (index, editedTodo) => {
     const newTodos = [...todos];
     Object.assign(newTodos[index], editedTodo);
     setTodos(newTodos);
-    firebase.database().ref('user/blarghnog/todos/').child(newTodos[index].title + newTodos[index].id).set(newTodos[index]);
+    firebase.database().ref('user/blarghnog/todos/').child(newTodos[index].id).set(newTodos[index]);
   };
 
   return(
     <div className = "app">
       <div className = "nav-div">
-        <div className = "navbar">
-          <ul className = "ul">
-            <li>Quick-List</li>
-          </ul>
-        </div>
+        <Navbar />
       </div>
       <div className = "todoListDiv">
         <div className = "todoListSection">

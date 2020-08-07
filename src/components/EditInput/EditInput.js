@@ -37,16 +37,18 @@ export default function EditInput({ inputType, editOn, editedTodo, setEditedTodo
     if(inputType === "date"){
         
         return(
-                <input
-                        className = "inputValue"
-                        type = "text"
-                        style = {editInputStyle}
-                        value = {dateValue}
-                        onChange = {e => setDateValue(e.target.value)}
-                        placeholder = {`Add ${inputType} e.g 02-28-2001`}
-                        onSubmit = {e => e.preventDefault}
-                    >
-                </input>
+                <div className = "dateSection">
+                    <input
+                            className = "inputValue"
+                            type = "text"
+                            style = {{...editInputStyle}}
+                            value = {dateValue}
+                            onChange = {e => setDateValue(e.target.value)}
+                            placeholder = {`Add ${inputType} e.g 02-28-2001`}
+                            onSubmit = {e => e.preventDefault}
+                        >
+                    </input>    
+                </div>
         );
     }
 
