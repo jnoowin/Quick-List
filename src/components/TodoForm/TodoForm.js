@@ -23,7 +23,7 @@ export default function TodoForm({ addTodo, todoInputRef }) {
             className = "todoInput"
             type = "text"
             value = {value}
-            onChange = {e => setValue(e.target.value.length < 40 ? e.target.value : e.target.value.slice(0, e.target.value.length - 1))}
+            onChange = {e => e.target.value.length <= 40 ? setValue(e.target.value) : null}
             placeholder = "Add to-do"
             ref = {todoInputRef}
             id = "todoFormID"

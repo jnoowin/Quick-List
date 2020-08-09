@@ -81,6 +81,7 @@ export default function App() {
           todos = {todos}
           todoInputRef = {todoInputRef}
           setCalendarDate = {setCalendarDate}
+          editTodo = {editTodo}
         />
       </div>
     </div>

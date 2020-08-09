@@ -10,7 +10,7 @@ export default function EditInput({ inputType, editOn, editedTodo, setEditedTodo
                 className = "inputValue"
                 style = {{...editInputStyle, fontWeight: "bold"}}
                 value = {editedTodo.title}
-                onChange = {e => setEditedTodo({...editedTodo, title: e.target.value})}
+                onChange = {e => e.target.value.length <= 40 ? setEditedTodo({...editedTodo, title: e.target.value}) : null }
                 onClick = {e => e.stopPropagation()}
                 placeholder = {`Add ${inputType}`}
                 onSubmit = {e => e.preventDefault}

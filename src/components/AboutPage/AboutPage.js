@@ -3,7 +3,7 @@ import "./AboutPage.css";
 
 export default function AboutPage() {
     return(
-        <div className = "textSection">
+        <div className = "text">
             <h1 className = "header">About Quick-List</h1>
             <div className = "bodyText">
                 <h2>What is Quick-List?</h2>
