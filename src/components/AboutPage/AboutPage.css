@@ -1,0 +1,14 @@
+.textSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    font-size: 2.5rem;
+}
+
+.bodyText {
+    width: 50vw;
+    font-size: 1.2rem;
+}

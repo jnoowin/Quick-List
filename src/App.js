@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
-import Navbar from "./components/Navbar/Navbar";
 import TodoForm from "./components/TodoForm/TodoForm";
 import TodoList from "./components/TodoList/TodoList";
 import TodoCalendar from "./components/TodoCalendar/TodoCalendar";
@@ -16,6 +15,8 @@ export default function App() {
 
   const [calendarDate, setCalendarDate] = useState(moment().format("M-D-YYYY"));
 
+  let loadedRef = useRef(false);
+
   useEffect(() => {
     document.title = todos.length > 0 ? `(${todos.length}) Quick-List` : "Quick-List";
   }, [todos.length]);
@@ -28,8 +29,9 @@ export default function App() {
           firebaseTodos.push(snapshot.val()[todo]);
         }
         setTodos(firebaseTodos)
-      });   
-  }, []);
+      });
+      loadedRef.current = true;   
+  }, [loadedRef]);
 
   const addTodo = newTitle => {
     const newTodos = [...todos];
@@ -62,9 +64,6 @@ export default function App() {
 
   return(
     <div className = "app">
-      <div className = "nav-div">
-        <Navbar />
-      </div>
       <div className = "todoListDiv">
         <div className = "todoListSection">
             <TodoForm 

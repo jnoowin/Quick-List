@@ -1,7 +1,53 @@
+.nav-div {
+    margin-bottom: 5rem;
+  }
+
 .navbar {
     background-color: rgb(100, 140, 250);
     position: absolute;
     top: 0px;
     height: 80px;
     width: 100vw;
-  }
+    display: flex;
+    align-items: center;
+}
+
+.navbarRight {
+    display: flex;
+    width: 90vw;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    list-style-type: none;
+}
+
+.title {
+    color: white;
+    font-size: 26px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: bold;
+    padding: 10px 15px;
+}
+
+.title:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.li {
+    color: white;
+    font-size: 18px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: bold;
+    padding: 10px 15px;
+}
+
+.li:hover {
+    color: white;
+    text-decoration: underline;
+}

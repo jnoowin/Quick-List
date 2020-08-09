@@ -4,13 +4,6 @@
   padding: 0;
 }
 
-.nav-div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 80px;
-}
-
 .todoListDiv {
   display: flex; 
   flex-direction: row;
@@ -27,13 +20,4 @@
   max-width: 30%;
   width: 30%;
   border-right-width: 100px;
-}
-
-.ul {
-  color: white;
-  font-size: 26px;
-  font-family: "Open Sans", sans-serif;
-  font-weight: bold;
-  list-style-type: none;
-  padding: 10px 15px;
 }
