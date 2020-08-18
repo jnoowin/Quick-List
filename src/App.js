@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import "./App.css";
 import TodoForm from "./components/TodoForm/TodoForm";
-import TodoList from "./components/TodoList/TodoList";
 import TodoCalendar from "./components/TodoCalendar/TodoCalendar";
 import './Firebase.js'
 const firebase = require("firebase");
@@ -15,7 +14,7 @@ export default function App() {
 
   const [calendarDate, setCalendarDate] = useState(moment().format("M-D-YYYY"));
 
-  let loadedRef = useRef(false);
+  const TodoList = React.lazy(() => import('./components/TodoList/TodoList'));
 
   useEffect(() => {
     document.title = todos.length > 0 ? `(${todos.length}) Quick-List` : "Quick-List";
@@ -30,8 +29,7 @@ export default function App() {
         }
         setTodos(firebaseTodos)
       });
-      loadedRef.current = true;   
-  }, [loadedRef]);
+  }, []);
 
   const addTodo = newTitle => {
     const newTodos = [...todos];
@@ -70,12 +68,14 @@ export default function App() {
               addTodo = {addTodo}
               todoInputRef = {todoInputRef}
             />
-            <TodoList
-              todos = {todos}
-              removeTodo = {removeTodo}
-              editTodo = {editTodo}
-              calendarDate = {calendarDate}
-            />
+            <Suspense fallback = {<p style = {{ padding: "1rem" }}>Loading...</p>}>
+              <TodoList
+                todos = {todos}
+                removeTodo = {removeTodo}
+                editTodo = {editTodo}
+                calendarDate = {calendarDate}
+              />
+            </Suspense>
         </div>
         <TodoCalendar
           todos = {todos}
