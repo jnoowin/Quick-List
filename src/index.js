@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import Navbar from './components/Navbar/Navbar';
 import AboutPage from './components/AboutPage/AboutPage';
+import Login from './components/Login/Login';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(

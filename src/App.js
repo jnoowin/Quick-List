@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef, Suspense } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import TodoForm from "./components/TodoForm/TodoForm";
 import TodoCalendar from "./components/TodoCalendar/TodoCalendar";
+import TodoList from './components/TodoList/TodoList';
 import './Firebase.js'
 const firebase = require("firebase");
 const shortid = require('shortid');
@@ -13,8 +14,6 @@ export default function App() {
   const todoInputRef = useRef(null);
 
   const [calendarDate, setCalendarDate] = useState(moment().format("M-D-YYYY"));
-
-  const TodoList = React.lazy(() => import('./components/TodoList/TodoList'));
 
   useEffect(() => {
     document.title = todos.length > 0 ? `(${todos.length}) Quick-List` : "Quick-List";
@@ -60,6 +59,10 @@ export default function App() {
     firebase.database().ref('user/blarghnog/todos/').child(newTodos[index].id).set(newTodos[index]);
   };
 
+  const updateCalendarDate = date => {
+    setCalendarDate(date);
+  }
+
   return(
     <div className = "app">
       <div className = "todoListDiv">
@@ -68,19 +71,17 @@ export default function App() {
               addTodo = {addTodo}
               todoInputRef = {todoInputRef}
             />
-            <Suspense fallback = {<p style = {{ padding: "1rem" }}>Loading...</p>}>
-              <TodoList
-                todos = {todos}
-                removeTodo = {removeTodo}
-                editTodo = {editTodo}
-                calendarDate = {calendarDate}
-              />
-            </Suspense>
+            <TodoList
+              todos = {todos}
+              removeTodo = {removeTodo}
+              editTodo = {editTodo}
+              calendarDate = {calendarDate}
+            />
         </div>
         <TodoCalendar
           todos = {todos}
           todoInputRef = {todoInputRef}
-          setCalendarDate = {setCalendarDate}
+          updateCalendarDate = {updateCalendarDate}
           editTodo = {editTodo}
         />
       </div>

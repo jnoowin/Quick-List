@@ -3,16 +3,16 @@ import CalendarListItem from '../CalendarListItem/CalendarListItem';
 import { Calendar } from 'antd';
 import 'antd/dist/antd.css';
 
-export default function TodoCalendar({ todos, todoInputRef, setCalendarDate, editTodo }) {
+export default function TodoCalendar({ todos, todoInputRef, updateCalendarDate, editTodo }) {
 
     const onSelect = (value) => {
         todoInputRef.current.focus();
-        setCalendarDate(value.format("M-D-YYYY"));
+        updateCalendarDate(value.format("M-D-YYYY"));
     };
 
     const calendarStyle = {
         width: "70%", 
-        maxWidth: "70%", 
+        maxWidth: "70%",
         marginRight: "1vw" 
     };
 
