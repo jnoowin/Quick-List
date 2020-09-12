@@ -1,0 +1,11 @@
+.dateDivider {
+    display: flex;
+    border-bottom: thin solid rgb(200, 200, 200);
+}
+
+.dateText {
+    font-weight: 550;
+    margin-left: 1rem;
+    font-size: 1.3rem;
+    margin-top: 0.5rem;
+}
