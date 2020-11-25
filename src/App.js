@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import TodoForm from "./components/TodoForm/TodoForm";
 import TodoCalendar from "./components/TodoCalendar/TodoCalendar";
-import TodoList from './components/TodoList/TodoList';
-import './Firebase.js'
+import TodoList from "./components/TodoList/TodoList";
+import "./Firebase.js";
 const firebase = require("firebase");
-const shortid = require('shortid');
-const moment = require('moment');
+const shortid = require("shortid");
+const moment = require("moment");
 
 export default function App() {
-  const[todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState([]);
 
   const todoInputRef = useRef(null);
 
@@ -20,71 +20,70 @@ export default function App() {
   }, [todos.length]);
 
   useEffect(() => {
-    firebase.database().ref("user/blarghnog/todos")
-    .once('value', snapshot => {
-        let firebaseTodos = []
-        for(let todo in snapshot.val()){
+    firebase
+      .database()
+      .ref("user/blarghnog/todos")
+      .once("value", (snapshot) => {
+        let firebaseTodos = [];
+        for (let todo in snapshot.val()) {
           firebaseTodos.push(snapshot.val()[todo]);
         }
-        setTodos(firebaseTodos)
+        setTodos(firebaseTodos);
       });
   }, []);
 
-  const addTodo = newTitle => {
+  const addTodo = (newTitle) => {
     const newTodos = [...todos];
-    newTodos.unshift({ 
+    newTodos.unshift({
       title: newTitle,
       text: "",
       location: "",
-      date: calendarDate, 
+      date: calendarDate,
       isCompleted: false,
-      id: shortid.generate()
+      id: shortid.generate(),
     });
     setTodos(newTodos);
-    firebase.database().ref('user/blarghnog/todos/').child(newTodos[0].id).set(newTodos[0]);
+    firebase.database().ref("user/blarghnog/todos/").child(newTodos[0].id).set(newTodos[0]);
   };
 
-  const removeTodo = index => {
+  const removeTodo = (index) => {
     const newTodos = [...todos];
     const refTodo = newTodos[index];
     newTodos.splice(index, 1);
     setTodos(newTodos);
-    firebase.database().ref('user/blarghnog/todos/').child(refTodo.id).remove()
+    firebase.database().ref("user/blarghnog/todos/").child(refTodo.id).remove();
   };
 
   const editTodo = (index, editedTodo) => {
     const newTodos = [...todos];
     Object.assign(newTodos[index], editedTodo);
     setTodos(newTodos);
-    firebase.database().ref('user/blarghnog/todos/').child(newTodos[index].id).set(newTodos[index]);
+    firebase.database().ref("user/blarghnog/todos/").child(newTodos[index].id).set(newTodos[index]);
   };
 
-  const updateCalendarDate = date => {
+  const updateCalendarDate = (date) => {
     setCalendarDate(date);
-  }
+  };
 
-  return(
-    <div className = "app">
-      <div className = "todoListDiv">
-        <div className = "todoListSection">
-            <TodoForm 
-              addTodo = {addTodo}
-              todoInputRef = {todoInputRef}
-            />
-            <TodoList
-              todos = {todos}
-              removeTodo = {removeTodo}
-              editTodo = {editTodo}
-              calendarDate = {calendarDate}
-            />
+  return (
+    <div className="app">
+      <div className="todoListDiv">
+        <div className="todoListSection">
+          <TodoForm addTodo={addTodo} todoInputRef={todoInputRef} />
+          <TodoList
+            todos={todos}
+            removeTodo={removeTodo}
+            editTodo={editTodo}
+            calendarDate={calendarDate}
+          />
         </div>
         <TodoCalendar
-          todos = {todos}
-          todoInputRef = {todoInputRef}
-          updateCalendarDate = {updateCalendarDate}
-          editTodo = {editTodo}
+          todos={todos}
+          todoInputRef={todoInputRef}
+          updateCalendarDate={updateCalendarDate}
+          editTodo={editTodo}
         />
       </div>
     </div>
   );
-};
+}

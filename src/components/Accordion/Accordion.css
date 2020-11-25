@@ -37,7 +37,7 @@
 }
 
 .chevron {
-  flex: auto; 
+  flex: auto;
   display: flex;
   justify-content: flex-end;
 }
