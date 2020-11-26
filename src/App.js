@@ -3,8 +3,6 @@ import "./App.css";
 import TodoForm from "./components/TodoForm/TodoForm";
 import TodoCalendar from "./components/TodoCalendar/TodoCalendar";
 import TodoList from "./components/TodoList/TodoList";
-import app from "./Firebase.js";
-import "firebase/database";
 const shortid = require("shortid");
 const moment = require("moment");
 
@@ -70,27 +68,17 @@ export default function App() {
   const todoInputRef = useRef(null);
 
   useEffect(() => {
-    document.title = state.todos.length > 0 ? `(${state.todos.length}) Quick-List` : "Quick-List";
-  }, [state.todos.length]);
-
-  useEffect(() => {
     todoInputRef.current.focus();
-    app
-      .database()
-      .ref("user/blarghnog/todos")
-      .once("value", (snapshot) => {
-        let firebaseTodos = [];
-        for (let todo in snapshot.val()) {
-          firebaseTodos.push(snapshot.val()[todo]);
-        }
-        dispatch({ type: "SET_TODOS", todos: firebaseTodos });
-      })
-      .catch((error) => console.log(error));
+    const savedTodos = JSON.parse(localStorage.getItem("todos"));
+    if (savedTodos) {
+      dispatch({ type: "SET_TODOS", todos: savedTodos });
+    }
   }, []);
 
-  //   firebase.database().ref("user/blarghnog/todos/").child(newTodos[0].id).set(newTodos[0]);
-  //   firebase.database().ref("user/blarghnog/todos/").child(refTodo.id).remove();
-  //   firebase.database().ref("user/blarghnog/todos/").child(newTodos[index].id).set(newTodos[index]);
+  useEffect(() => {
+    document.title = state.todos.length > 0 ? `(${state.todos.length}) Quick-List` : "Quick-List";
+    localStorage.setItem("todos", JSON.stringify(state.todos));
+  }, [state.todos]);
 
   return (
     <div className="app">
@@ -98,7 +86,6 @@ export default function App() {
         <TodoContext.Provider value={{ state, dispatch }}>
           <div className="todoListSection">
             <TodoForm todoInputRef={todoInputRef} />
-
             <TodoList todos={state.todos} />
           </div>
           <TodoCalendar todoInputRef={todoInputRef} />
