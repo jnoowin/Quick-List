@@ -5,23 +5,12 @@ import AccordionContent from "../AccordionContent/AccordionContent";
 import EditInput from "../EditInput/EditInput";
 import { DownOutlined } from "@ant-design/icons";
 
-export default function Accordion({ index, todo, removeTodo, editTodo, calendarDate }) {
+export default function Accordion({ todo }) {
   const [active, setActive] = useState(false);
   const [editOn, setEditOn] = useState(false);
   const contentRef = useRef(null);
 
-  const [editedTodo, setEditedTodo] = useState({
-    title: todo.title,
-    location: todo.location,
-    date: todo.date,
-    text: todo.text,
-  });
-
-  const titleStyle = {
-    textDecoration: todo.isCompleted ? "line-through" : "",
-    color: todo.isCompleted ? "darkGrey" : "black",
-    display: editOn ? "none" : "block",
-  };
+  const [editedTodo, setEditedTodo] = useState({ ...todo });
 
   const changeAccordion = () => {
     setActive(!active);
@@ -30,8 +19,15 @@ export default function Accordion({ index, todo, removeTodo, editTodo, calendarD
   return (
     <div className="accordionDiv">
       <div className={`accordion ${active}`} onClick={changeAccordion}>
-        <CheckBox todo={todo} editTodo={editTodo} index={index} />
-        <p className="accordionTitle" style={titleStyle}>
+        <CheckBox todo={todo} />
+        <p
+          className="accordionTitle"
+          style={{
+            textDecoration: todo.isCompleted ? "line-through" : "",
+            color: todo.isCompleted ? "darkGrey" : "black",
+            display: editOn ? "none" : "block",
+          }}
+        >
           {todo.title}
         </p>
         <EditInput
@@ -52,13 +48,9 @@ export default function Accordion({ index, todo, removeTodo, editTodo, calendarD
       </div>
       <div className="accordionContent" ref={contentRef}>
         <AccordionContent
-          index={index}
           todo={todo}
-          removeTodo={removeTodo}
-          editTodo={editTodo}
           contentRef={contentRef}
           active={active}
-          calendarDate={calendarDate}
           editOn={editOn}
           setEditOn={setEditOn}
           editedTodo={editedTodo}

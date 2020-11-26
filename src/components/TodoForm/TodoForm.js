@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./TodoForm.css";
+import { TodoContext } from "../../App";
 import { EnterOutlined, PlusCircleOutlined } from "@ant-design/icons";
 
-export default function TodoForm({ addTodo, todoInputRef }) {
+export default function TodoForm({ todoInputRef }) {
+  const { dispatch } = useContext(TodoContext);
+
   const [value, setValue] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!value) return;
-    addTodo(value);
+    dispatch({ type: "ADD_TODO", newTitle: value });
     setValue("");
   };
 
   return (
     <div className="enter">
       <form onSubmit={handleSubmit} className="form">
-        <PlusCircleOutlined style={{ fontSize: "25px", marginLeft: "9px" }} />
+        <PlusCircleOutlined style={{ fontSize: "25px", marginLeft: "0.5rem" }} />
         <input
           className="todoInput"
           type="text"

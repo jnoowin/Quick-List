@@ -1,18 +1,11 @@
 import React from "react";
 import Todo from "../Todo/Todo";
 
-export default function TodoList({ todos, removeTodo, editTodo, calendarDate }) {
+export default function TodoList({ todos }) {
   return (
     <div>
-      {todos.map((todo, index) => (
-        <Todo
-          key={todo.id}
-          index={index}
-          todo={todo}
-          removeTodo={removeTodo}
-          editTodo={editTodo}
-          calendarDate={calendarDate}
-        ></Todo>
+      {todos.map((todo) => (
+        <Todo key={todo.id} todo={todo}></Todo>
       ))}
     </div>
   );

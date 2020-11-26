@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./AccordionContent.css";
 import EditInput from "../EditInput/EditInput";
+import { TodoContext } from "../../App";
 import {
   DeleteOutlined,
   CalendarOutlined,
@@ -11,24 +12,22 @@ import {
 const moment = require("moment");
 
 export default function AccordionContent({
-  index,
   todo,
-  removeTodo,
-  editTodo,
   contentRef,
   active,
-  calendarDate,
   editOn,
   setEditOn,
   editedTodo,
   setEditedTodo,
 }) {
+  const { state, dispatch } = useContext(TodoContext);
+
   const [dateValue, setDateValue] = useState("");
   const [prevCalendarDate, setPrevCalendarDate] = useState("");
 
-  if (prevCalendarDate !== calendarDate) {
-    setPrevCalendarDate(calendarDate);
-    setDateValue(calendarDate);
+  if (prevCalendarDate !== state.calendarDate) {
+    setPrevCalendarDate(state.calendarDate);
+    setDateValue(state.calendarDate);
   }
 
   useEffect(() => {
@@ -52,10 +51,10 @@ export default function AccordionContent({
   };
   const displayStyle = { display: editOn ? "none" : "block" };
 
-  const saveClick = (e, editedTodo, index, dateValue, todo) => {
+  const saveClick = (e, editedTodo, dateValue, todo) => {
     e.preventDefault();
     if (moment(dateValue, "M-D-YYY", true).isValid() || dateValue === "") {
-      editTodo(index, { ...editedTodo, date: dateValue });
+      dispatch({ type: "EDIT_TODO", editedTodo: { ...editedTodo, date: dateValue } });
     } else {
       setDateValue(todo.date);
     }
@@ -133,7 +132,7 @@ export default function AccordionContent({
         <button
           className="saveButton"
           style={{ display: editOn ? "block" : "none" }}
-          onClick={(e) => saveClick(e, editedTodo, index, dateValue, todo)}
+          onClick={(e) => saveClick(e, editedTodo, dateValue, todo)}
         >
           Save
         </button>
@@ -141,7 +140,7 @@ export default function AccordionContent({
         <DeleteOutlined
           style={{ fontSize: "26px" }}
           onClick={() => {
-            removeTodo(index);
+            dispatch({ type: "DELETE_TODO", deleteId: todo.id });
           }}
         />
       </div>

@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./CheckBox.css";
+import { TodoContext } from "../../App";
 
-export default function CheckBox({ todo, editTodo, index }) {
-  const handleClick = (e, editTodo, todo, index) => {
+export default function CheckBox({ todo }) {
+  const { dispatch } = useContext(TodoContext);
+
+  const handleClick = (e) => {
     e.stopPropagation();
-    editTodo(index, { ...todo, isCompleted: !todo.isCompleted });
+    dispatch({ type: "EDIT_TODO", editedTodo: { ...todo, isCompleted: !todo.isCompleted } });
   };
 
   return (
     <div
       className="completeCheckBox"
-      onClick={(e) => handleClick(e, editTodo, todo, index)}
+      onClick={(e) => handleClick(e)}
       style={{ backgroundColor: todo.isCompleted ? "rgb(100, 140, 250)" : "" }}
     >
       <div className="checkMark" style={{ display: todo.isCompleted ? "block" : "none" }}></div>

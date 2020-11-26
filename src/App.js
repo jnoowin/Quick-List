@@ -1,26 +1,81 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useReducer, createContext, useEffect, useRef } from "react";
 import "./App.css";
 import TodoForm from "./components/TodoForm/TodoForm";
 import TodoCalendar from "./components/TodoCalendar/TodoCalendar";
 import TodoList from "./components/TodoList/TodoList";
-import "./Firebase.js";
-const firebase = require("firebase");
+import app from "./Firebase.js";
+import "firebase/database";
 const shortid = require("shortid");
 const moment = require("moment");
 
+export const TodoContext = createContext({ todos: [], calendarDate: "" });
+
 export default function App() {
-  const [todos, setTodos] = useState([]);
+  const INITIAL_STATE = {
+    todos: [],
+    calendarDate: moment().format("M-D-YYYY"),
+  };
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "ADD_TODO":
+        return {
+          todos: [
+            {
+              title: action.newTitle,
+              text: "",
+              location: "",
+              date: state.calendarDate,
+              isCompleted: false,
+              id: shortid.generate(),
+            },
+            ...state.todos,
+          ],
+          calendarDate: state.calendarDate,
+        };
+      case "DELETE_TODO":
+        return {
+          todos: [...state.todos.filter((todo) => todo.id !== action.deleteId)],
+          calendarDate: state.calendarDate,
+        };
+      case "EDIT_TODO":
+        return {
+          todos: [
+            ...state.todos.map((todo) => {
+              if (todo.id === action.editedTodo.id) {
+                return action.editedTodo;
+              }
+              return todo;
+            }),
+          ],
+          calendarDate: state.calendarDate,
+        };
+      case "SET_TODOS":
+        return {
+          todos: [...action.todos],
+          calendarDate: state.calendarDate,
+        };
+      case "EDIT_CALENDAR_DATE":
+        return {
+          todos: [...state.todos],
+          calendarDate: action.calendarDate,
+        };
+      default:
+        throw new Error();
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
   const todoInputRef = useRef(null);
 
-  const [calendarDate, setCalendarDate] = useState(moment().format("M-D-YYYY"));
+  useEffect(() => {
+    document.title = state.todos.length > 0 ? `(${state.todos.length}) Quick-List` : "Quick-List";
+  }, [state.todos.length]);
 
   useEffect(() => {
-    document.title = todos.length > 0 ? `(${todos.length}) Quick-List` : "Quick-List";
-  }, [todos.length]);
-
-  useEffect(() => {
-    firebase
+    todoInputRef.current.focus();
+    app
       .database()
       .ref("user/blarghnog/todos")
       .once("value", (snapshot) => {
@@ -28,61 +83,26 @@ export default function App() {
         for (let todo in snapshot.val()) {
           firebaseTodos.push(snapshot.val()[todo]);
         }
-        setTodos(firebaseTodos);
-      });
+        dispatch({ type: "SET_TODOS", todos: firebaseTodos });
+      })
+      .catch((error) => console.log(error));
   }, []);
 
-  const addTodo = (newTitle) => {
-    const newTodos = [...todos];
-    newTodos.unshift({
-      title: newTitle,
-      text: "",
-      location: "",
-      date: calendarDate,
-      isCompleted: false,
-      id: shortid.generate(),
-    });
-    setTodos(newTodos);
-    firebase.database().ref("user/blarghnog/todos/").child(newTodos[0].id).set(newTodos[0]);
-  };
-
-  const removeTodo = (index) => {
-    const newTodos = [...todos];
-    const refTodo = newTodos[index];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
-    firebase.database().ref("user/blarghnog/todos/").child(refTodo.id).remove();
-  };
-
-  const editTodo = (index, editedTodo) => {
-    const newTodos = [...todos];
-    Object.assign(newTodos[index], editedTodo);
-    setTodos(newTodos);
-    firebase.database().ref("user/blarghnog/todos/").child(newTodos[index].id).set(newTodos[index]);
-  };
-
-  const updateCalendarDate = (date) => {
-    setCalendarDate(date);
-  };
+  //   firebase.database().ref("user/blarghnog/todos/").child(newTodos[0].id).set(newTodos[0]);
+  //   firebase.database().ref("user/blarghnog/todos/").child(refTodo.id).remove();
+  //   firebase.database().ref("user/blarghnog/todos/").child(newTodos[index].id).set(newTodos[index]);
 
   return (
     <div className="app">
       <div className="todoListDiv">
-        <div className="todoListSection">
-          <TodoForm addTodo={addTodo} todoInputRef={todoInputRef} />
-          <TodoList
-            todos={todos}
-            removeTodo={removeTodo}
-            editTodo={editTodo}
-            calendarDate={calendarDate}
-          />
-        </div>
-        <TodoCalendar
-          todos={todos}
-          todoInputRef={todoInputRef}
-          updateCalendarDate={updateCalendarDate}
-          editTodo={editTodo}
-        />
+        <TodoContext.Provider value={{ state, dispatch }}>
+          <div className="todoListSection">
+            <TodoForm todoInputRef={todoInputRef} />
+
+            <TodoList todos={state.todos} />
+          </div>
+          <TodoCalendar todoInputRef={todoInputRef} />
+        </TodoContext.Provider>
       </div>
     </div>
   );

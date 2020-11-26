@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./CalendarListItem.css";
+import { TodoContext } from "../../App";
 const Moment = require("moment");
 
-export default function CalendarListItem({ title, todo, editTodo, index }) {
-  const onClick = (left, todo, editTodo, index) => {
+export default function CalendarListItem({ todo }) {
+  const { dispatch } = useContext(TodoContext);
+
+  const onClick = (e, left, todo) => {
+    e.stopPropagation();
     const splitDate = todo.date.split("-");
     let tomorrow = new Date(
       parseInt(splitDate[2]),
@@ -15,7 +19,10 @@ export default function CalendarListItem({ title, todo, editTodo, index }) {
     } else {
       tomorrow.setDate(tomorrow.getDate() + 1);
     }
-    editTodo(index, { ...todo, date: new Moment(tomorrow).format("M-D-YYYY") });
+    dispatch({
+      type: "EDIT_TODO",
+      editedTodo: { ...todo, date: new Moment(tomorrow).format("M-D-YYYY") },
+    });
   };
 
   return (
@@ -26,17 +33,17 @@ export default function CalendarListItem({ title, todo, editTodo, index }) {
           height="20px"
           viewBox="0 0 15 20"
           fill="#999999"
-          onClick={() => onClick(true, todo, editTodo, index)}
+          onClick={(e) => onClick(e, true, todo)}
         >
           <polygon points="8,3 1,10 8,17"></polygon>
         </svg>
-        {title.length <= 16 ? title : title.slice(0, 16) + "..."}
+        {todo.title.length <= 16 ? todo.title : todo.title.slice(0, 16) + "..."}
         <svg
           width="15px"
           height="20px"
           viewBox="0 0 15 20"
           fill="#999999"
-          onClick={() => onClick(false, todo, editTodo, index)}
+          onClick={(e) => onClick(e, false, todo)}
         >
           <polygon points="8,3 15,10 8,17"></polygon>
         </svg>

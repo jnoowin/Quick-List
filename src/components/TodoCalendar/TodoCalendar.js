@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import CalendarListItem from "../CalendarListItem/CalendarListItem";
 import { Calendar } from "antd";
+import { TodoContext } from "../../App";
 import "antd/dist/antd.css";
 
-export default function TodoCalendar({ todos, todoInputRef, updateCalendarDate, editTodo }) {
+export default function TodoCalendar({ todoInputRef }) {
+  const { state, dispatch } = useContext(TodoContext);
+
   const onSelect = (value) => {
     todoInputRef.current.focus();
-    updateCalendarDate(value.format("M-D-YYYY"));
+    dispatch({ type: "EDIT_CALENDAR_DATE", calendarDate: value.format("M-D-YYYY") });
   };
 
   const calendarStyle = {
@@ -18,15 +21,9 @@ export default function TodoCalendar({ todos, todoInputRef, updateCalendarDate, 
   const dateCellRender = (value) => {
     return (
       <ul>
-        {todos.map((todo, index) =>
+        {state.todos.map((todo) =>
           value.format("M-D-YYYY") === todo.date ? (
-            <CalendarListItem
-              key={todo.id}
-              title={todo.title}
-              todo={todo}
-              editTodo={editTodo}
-              index={index}
-            />
+            <CalendarListItem key={todo.id} todo={todo} />
           ) : null
         )}
       </ul>
