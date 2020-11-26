@@ -3,20 +3,39 @@ import "./App.css";
 import TodoForm from "./components/TodoForm/TodoForm";
 import TodoCalendar from "./components/TodoCalendar/TodoCalendar";
 import TodoList from "./components/TodoList/TodoList";
+import { DateBinarySearch } from "./DateBinarySearch";
 const shortid = require("shortid");
-const moment = require("moment");
+const dayjs = require("dayjs");
+const customParseFormat = require("dayjs/plugin/customParseFormat");
+dayjs.extend(customParseFormat);
 
 export const TodoContext = createContext({ todos: [], calendarDate: "" });
 
 export default function App() {
   const INITIAL_STATE = {
     todos: [],
-    calendarDate: moment().format("M-D-YYYY"),
+    calendarDate: dayjs().format("M-D-YYYY"),
   };
 
   const reducer = (state, action) => {
     switch (action.type) {
       case "ADD_TODO":
+        if (state.todos.length > 0) {
+          const newTodos = [...state.todos];
+          // console.log(dayjs("12-25-1995", "MM-DD-YYYY"));
+          newTodos.splice(DateBinarySearch(newTodos, dayjs(state.calendarDate, "M-D-YYYY")), 0, {
+            title: action.newTitle,
+            text: "",
+            location: "",
+            date: state.calendarDate,
+            isCompleted: false,
+            id: shortid.generate(),
+          });
+          return {
+            todos: [...newTodos],
+            calendarDate: state.calendarDate,
+          };
+        }
         return {
           todos: [
             {
