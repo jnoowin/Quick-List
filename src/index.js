@@ -10,15 +10,16 @@ import * as serviceWorker from "./serviceWorker";
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Navbar />
-      <Switch>
-        <Route exact path="/">
-          <App />
-        </Route>
-        <Route path="/about">
-          <AboutPage />
-        </Route>
-      </Switch>
+      <Navbar>
+        <Switch>
+          <Route exact path="/">
+            <App />
+          </Route>
+          <Route path="/about">
+            <AboutPage />
+          </Route>
+        </Switch>
+      </Navbar>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
