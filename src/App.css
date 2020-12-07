@@ -1,7 +1,22 @@
 * {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(165, 165, 165) rgba(240, 240, 240, 0.8);
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+*::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(240, 240, 240, 0.8);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(165, 165, 165);
+  border-radius: 20px;
 }
 
 .todoListDiv {
