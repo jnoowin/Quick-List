@@ -27,6 +27,7 @@ export default function TodoForm({ todoInputRef }) {
           placeholder="Add to-do"
           ref={todoInputRef}
           id="todoFormID"
+          autoComplete="off"
         />
 
         <button className="enterButton" onClick={handleSubmit}>

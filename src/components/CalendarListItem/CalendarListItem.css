@@ -6,15 +6,17 @@
   border-radius: 4px;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
 }
 
 .titleDateText {
+  max-height: inherit;
   display: flex;
-  flex: auto;
+  flex: 1;
   align-items: center;
-  justify-content: space-between;
-  height: 10%;
+  justify-content: flex-start;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }

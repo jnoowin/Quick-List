@@ -71,7 +71,7 @@ export default function App() {
       case "EDIT_TODO_DATE":
         const newTodos = state.todos.filter((todo) => todo.id !== action.editedTodo.id);
         newTodos.splice(
-          DateBinarySearch(state.todos, dayjs(action.editedTodo.date, "M-D-YYYY")),
+          DateBinarySearch(newTodos, dayjs(action.editedTodo.date, "M-D-YYYY")),
           0,
           action.editedTodo
         );

@@ -29,27 +29,25 @@ export default function CalendarListItem({ todo }) {
 
   return (
     <li className="listItem">
-      <div className="titleDateText">
-        <svg
-          width="15px"
-          height="20px"
-          viewBox="0 0 15 20"
-          fill="#999999"
-          onClick={(e) => onClick(e, true, todo)}
-        >
-          <polygon points="8,3 1,10 8,17"></polygon>
-        </svg>
-        {todo.title.length <= 16 ? todo.title : todo.title.slice(0, 16) + "..."}
-        <svg
-          width="15px"
-          height="20px"
-          viewBox="0 0 15 20"
-          fill="#999999"
-          onClick={(e) => onClick(e, false, todo)}
-        >
-          <polygon points="8,3 15,10 8,17"></polygon>
-        </svg>
-      </div>
+      <svg
+        width="15px"
+        height="20px"
+        viewBox="0 0 15 20"
+        fill="#999999"
+        onClick={(e) => onClick(e, true, todo)}
+      >
+        <polygon points="8,3 1,10 8,17"></polygon>
+      </svg>
+      <h4 className="titleDateText">{todo.title}</h4>
+      <svg
+        width="15px"
+        height="20px"
+        viewBox="0 0 15 20"
+        fill="#999999"
+        onClick={(e) => onClick(e, false, todo)}
+      >
+        <polygon points="8,3 15,10 8,17"></polygon>
+      </svg>
     </li>
   );
 }

@@ -16,8 +16,9 @@ export function DateBinarySearch(objArr, targetDate) {
   }
   // if target date is greater than the end of the array, return end + 1
   if (dayjs(objArr[end].date, "M-D-YYYY").isSameOrBefore(targetDate)) {
-    return end;
+    return end + 1;
   }
+
   // binary search for appropriate position
   while (start <= end) {
     mid = Math.floor((start + end) / 2);
