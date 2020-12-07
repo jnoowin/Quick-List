@@ -24,6 +24,7 @@
 }
 
 .todoInput:focus {
+  background-color: rgb(100, 140, 250, 0.1);
   border-color: rgb(100, 140, 250);
   transition: border-color 0.3s ease;
 }

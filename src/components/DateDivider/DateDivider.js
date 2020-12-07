@@ -1,14 +1,13 @@
-import React from 'react';
+import React from "react";
 import "./DateDivider.css";
-const moment = require('moment');
+const dayjs = require("dayjs");
+const customParseFormat = require("dayjs/plugin/customParseFormat");
+dayjs.extend(customParseFormat);
 
 export default function DateDivider({ date }) {
-    const formattedDate = date[2] + "-" + date[0] + "-" + date[1];
-    return(
-        <div className = "dateDivider">
-            <h1 className = "dateText">
-                {moment(formattedDate).format("dddd") + ", " + moment(formattedDate).format("MMMM") + " "+ moment(formattedDate).format("D")}
-            </h1>
-        </div>
-    );
+  return (
+    <div className="dateDivider">
+      <h1 className="dateText">{dayjs(date, "M-D-YYYY").format("dddd, MMMM D")}</h1>
+    </div>
+  );
 }

@@ -1,28 +1,30 @@
 import React, { useContext } from "react";
 import "./CalendarListItem.css";
 import { TodoContext } from "../../App";
-const Moment = require("moment");
+const dayjs = require("dayjs");
+const customParseFormat = require("dayjs/plugin/customParseFormat");
+dayjs.extend(customParseFormat);
 
 export default function CalendarListItem({ todo }) {
   const { dispatch } = useContext(TodoContext);
 
   const onClick = (e, left, todo) => {
     e.stopPropagation();
-    const splitDate = todo.date.split("-");
-    let tomorrow = new Date(
-      parseInt(splitDate[2]),
-      parseInt(splitDate[0]) - 1,
-      parseInt(splitDate[1])
-    );
-    if (left) {
-      tomorrow.setDate(tomorrow.getDate() - 1);
-    } else {
-      tomorrow.setDate(tomorrow.getDate() + 1);
-    }
-    dispatch({
-      type: "EDIT_TODO",
-      editedTodo: { ...todo, date: new Moment(tomorrow).format("M-D-YYYY") },
-    });
+    left
+      ? dispatch({
+          type: "EDIT_TODO_DATE",
+          editedTodo: {
+            ...todo,
+            date: dayjs(todo.date, "M-D-YYYY").subtract(1, "day").format("M-D-YYYY"),
+          },
+        })
+      : dispatch({
+          type: "EDIT_TODO_DATE",
+          editedTodo: {
+            ...todo,
+            date: dayjs(todo.date, "M-D-YYYY").add(1, "day").format("M-D-YYYY"),
+          },
+        });
   };
 
   return (

@@ -6,9 +6,11 @@ export default function Navbar({ children }) {
   return (
     <div className="navbar">
       <header className="head">
-        <Link className="title" to="/">
-          Quick-List
-        </Link>
+        <div style={{ flex: 1 }}>
+          <Link className="title" to="/">
+            Quick-List
+          </Link>
+        </div>
         <li>
           <Link className="li" to="/about">
             about

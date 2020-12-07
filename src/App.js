@@ -3,7 +3,7 @@ import "./App.css";
 import TodoForm from "./components/TodoForm/TodoForm";
 import TodoCalendar from "./components/TodoCalendar/TodoCalendar";
 import TodoList from "./components/TodoList/TodoList";
-import { DateBinarySearch } from "./DateBinarySearch";
+import { DateBinarySearch } from "./functions/DateBinarySearch";
 const shortid = require("shortid");
 const dayjs = require("dayjs");
 const customParseFormat = require("dayjs/plugin/customParseFormat");
@@ -18,11 +18,11 @@ export default function App() {
   };
 
   const reducer = (state, action) => {
+    // console.log(state, action);
     switch (action.type) {
       case "ADD_TODO":
         if (state.todos.length > 0) {
           const newTodos = [...state.todos];
-          // console.log(dayjs("12-25-1995", "MM-DD-YYYY"));
           newTodos.splice(DateBinarySearch(newTodos, dayjs(state.calendarDate, "M-D-YYYY")), 0, {
             title: action.newTitle,
             text: "",
@@ -32,24 +32,25 @@ export default function App() {
             id: shortid.generate(),
           });
           return {
-            todos: [...newTodos],
+            todos: newTodos,
+            calendarDate: state.calendarDate,
+          };
+        } else {
+          return {
+            todos: [
+              {
+                title: action.newTitle,
+                text: "",
+                location: "",
+                date: state.calendarDate,
+                isCompleted: false,
+                id: shortid.generate(),
+              },
+              ...state.todos,
+            ],
             calendarDate: state.calendarDate,
           };
         }
-        return {
-          todos: [
-            {
-              title: action.newTitle,
-              text: "",
-              location: "",
-              date: state.calendarDate,
-              isCompleted: false,
-              id: shortid.generate(),
-            },
-            ...state.todos,
-          ],
-          calendarDate: state.calendarDate,
-        };
       case "DELETE_TODO":
         return {
           todos: [...state.todos.filter((todo) => todo.id !== action.deleteId)],
@@ -65,6 +66,17 @@ export default function App() {
               return todo;
             }),
           ],
+          calendarDate: state.calendarDate,
+        };
+      case "EDIT_TODO_DATE":
+        const newTodos = state.todos.filter((todo) => todo.id !== action.editedTodo.id);
+        newTodos.splice(
+          DateBinarySearch(state.todos, dayjs(action.editedTodo.date, "M-D-YYYY")),
+          0,
+          action.editedTodo
+        );
+        return {
+          todos: newTodos,
           calendarDate: state.calendarDate,
         };
       case "SET_TODOS":
