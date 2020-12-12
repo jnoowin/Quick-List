@@ -20,31 +20,20 @@ export default function Accordion({ todo }) {
     <div className="accordionDiv">
       <div className={`accordion ${active}`} onClick={changeAccordion}>
         <CheckBox todo={todo} />
-        <p
-          className="accordionTitle"
-          style={{
-            textDecoration: todo.isCompleted ? "line-through" : "",
-            color: todo.isCompleted ? "darkGrey" : "black",
-            display: editOn ? "none" : "block",
-          }}
-        >
-          {todo.title}
-        </p>
+        <span className="accordionTitle">{todo.title}</span>
         <EditInput
           inputType="title"
           editOn={editOn}
           editedTodo={editedTodo}
           setEditedTodo={setEditedTodo}
         />
-        <div className="chevron">
-          <DownOutlined
-            style={{
-              fontSize: "20px",
-              transform: active ? "rotate(180deg)" : "rotate(0deg)",
-              transition: "transform 0.2s ease",
-            }}
-          />
-        </div>
+        <DownOutlined
+          style={{
+            fontSize: "20px",
+            transform: active ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform 0.2s ease",
+          }}
+        />
       </div>
       <div className="accordionContent" ref={contentRef}>
         <AccordionContent

@@ -8,7 +8,7 @@
   background-color: white;
   color: #444;
   cursor: pointer;
-  padding: 9px;
+  padding: 1rem 0.5rem 1rem 0.5rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -22,10 +22,9 @@
 
 .accordionTitle {
   font-family: "Open Sans", sans-serif;
-  font-size: 18px;
-  text-align: left;
-  position: relative;
-  transform: translateY(30%);
+  font-size: 1.2rem;
+  flex: 1;
+  height: 100%;
 }
 
 .accordionContent {
@@ -33,12 +32,6 @@
   overflow-y: hidden;
   max-height: 0px;
   transition: max-height 0.15s ease;
-}
-
-.chevron {
-  flex: auto;
-  display: flex;
-  justify-content: flex-end;
 }
 
 .removeButton {

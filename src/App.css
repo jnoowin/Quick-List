@@ -19,20 +19,34 @@
   border-radius: 20px;
 }
 
-.todoListDiv {
-  display: flex;
-  flex-direction: row;
+@media only screen and (min-width: 1000px) {
+  .app {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .todoList {
+    display: flex;
+    flex-direction: column;
+    display: flex;
+    overflow-y: scroll;
+    overflow-x: hidd888888en;
+    max-height: 100%;
+    height: 100vh;
+    max-width: 30vw;
+    width: 30vw;
+  }
 }
 
-.todoListSection {
-  display: flex;
-  flex-direction: column;
-  display: flex;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  max-height: 100%;
-  height: 100vh;
-  max-width: 30%;
-  width: 30%;
-  border-right-width: 100px;
+@media only screen and (max-width: 1000px) {
+  .app {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .todoList {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
 }

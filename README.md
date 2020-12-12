@@ -8,7 +8,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Technology
 
 Created with ReactJS. Focus on learning functional components and hooks. Creating HTML and CSS components from scratch for funzies.
-Calendar component and icons from [antd.](https://ant.design/components/overview/)
+Calendar, icons, and badges from [antd.](https://ant.design/components/overview/)
 
 ## Installation
 

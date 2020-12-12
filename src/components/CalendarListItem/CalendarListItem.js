@@ -38,7 +38,7 @@ export default function CalendarListItem({ todo }) {
       >
         <polygon points="8,3 1,10 8,17"></polygon>
       </svg>
-      <h4 className="titleDateText">{todo.title}</h4>
+      <span className="titleDateText">{todo.title}</span>
       <svg
         width="15px"
         height="20px"

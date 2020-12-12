@@ -16,7 +16,7 @@ export default function TodoForm({ todoInputRef }) {
   };
 
   return (
-    <div className="enter">
+    <>
       <form onSubmit={handleSubmit} className="form">
         <PlusCircleOutlined style={{ fontSize: "25px", marginLeft: "0.5rem" }} />
         <input
@@ -34,6 +34,6 @@ export default function TodoForm({ todoInputRef }) {
           <EnterOutlined style={{ fontSize: "20px" }} />
         </button>
       </form>
-    </div>
+    </>
   );
 }
