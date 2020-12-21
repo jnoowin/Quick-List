@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./CalendarListItem.css";
-import { TodoContext } from "../../App";
+import { TodoContext } from "../../Main";
 const dayjs = require("dayjs");
 const customParseFormat = require("dayjs/plugin/customParseFormat");
 dayjs.extend(customParseFormat);
@@ -12,14 +12,14 @@ export default function CalendarListItem({ todo }) {
     e.stopPropagation();
     left
       ? dispatch({
-          type: "EDIT_TODO_DATE",
+          type: "EDIT_TODO",
           editedTodo: {
             ...todo,
             date: dayjs(todo.date, "M-D-YYYY").subtract(1, "day").format("M-D-YYYY"),
           },
         })
       : dispatch({
-          type: "EDIT_TODO_DATE",
+          type: "EDIT_TODO",
           editedTodo: {
             ...todo,
             date: dayjs(todo.date, "M-D-YYYY").add(1, "day").format("M-D-YYYY"),

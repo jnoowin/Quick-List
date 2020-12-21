@@ -10,6 +10,7 @@ export function DateBinarySearch(objArr, targetDate) {
   let start = 0,
     end = objArr.length - 1,
     mid;
+
   // if targetDate is less than the beginning of the array, return 0
   if (dayjs(objArr[start].date, "M-D-YYYY").isSameOrAfter(targetDate)) {
     return start;

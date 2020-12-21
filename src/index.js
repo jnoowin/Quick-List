@@ -1,26 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./index.css";
-import App from "./App";
-import Navbar from "./components/Navbar/Navbar";
-import AboutPage from "./components/AboutPage/AboutPage";
+import Main from "./Main";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Navbar>
-        <Switch>
-          <Route exact path="/">
-            <App />
-          </Route>
-          <Route path="/about">
-            <AboutPage />
-          </Route>
-        </Switch>
-      </Navbar>
-    </BrowserRouter>
+    <Main />
   </React.StrictMode>,
   document.getElementById("root")
 );

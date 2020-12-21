@@ -32,6 +32,8 @@
   font-size: 18px;
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
+  margin-right: 1rem;
+  cursor: pointer;
 }
 
 .li:hover {

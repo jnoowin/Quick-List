@@ -20,7 +20,9 @@ export default function Accordion({ todo }) {
     <div className="accordionDiv">
       <div className={`accordion ${active}`} onClick={changeAccordion}>
         <CheckBox todo={todo} />
-        <span className="accordionTitle">{todo.title}</span>
+        <span style={{ display: editOn ? "none" : "block" }} className="accordionTitle">
+          {todo.title}
+        </span>
         <EditInput
           inputType="title"
           editOn={editOn}

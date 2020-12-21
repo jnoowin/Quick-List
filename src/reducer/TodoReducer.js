@@ -10,7 +10,6 @@ export const INITIAL_STATE = {
 };
 
 export const TodoReducer = (state, action) => {
-  // console.log(state, action);
   switch (action.type) {
     case "ADD_TODO":
       if (state.todos.length > 0) {
@@ -49,31 +48,28 @@ export const TodoReducer = (state, action) => {
         calendarDate: state.calendarDate,
       };
     case "EDIT_TODO":
-      return {
-        todos: [
-          ...state.todos.map((todo) => {
-            if (todo.id === action.editedTodo.id) {
-              return action.editedTodo;
-            }
-            return todo;
-          }),
-        ],
-        calendarDate: state.calendarDate,
-      };
-    case "EDIT_TODO_DATE":
-      const newTodos = state.todos.filter((todo) => todo.id !== action.editedTodo.id);
-      newTodos.splice(
-        DateBinarySearch(newTodos, dayjs(action.editedTodo.date, "M-D-YYYY")),
-        0,
-        action.editedTodo
-      );
-      return {
-        todos: newTodos,
-        calendarDate: state.calendarDate,
-      };
+      if (state.todos.length <= 1) {
+        return { todos: [action.editedTodo], calendarDate: state.calendarDate };
+      } else {
+        const newTodos = state.todos.filter((todo) => todo.id !== action.editedTodo.id);
+        newTodos.splice(
+          DateBinarySearch(newTodos, dayjs(action.editedTodo.date, "M-D-YYYY")),
+          0,
+          action.editedTodo
+        );
+        return {
+          todos: newTodos,
+          calendarDate: state.calendarDate,
+        };
+      }
     case "SET_TODOS":
       return {
         todos: [...action.todos],
+        calendarDate: state.calendarDate,
+      };
+    case "CLEAR_TODOS":
+      return {
+        todos: [],
         calendarDate: state.calendarDate,
       };
     case "EDIT_CALENDAR_DATE":

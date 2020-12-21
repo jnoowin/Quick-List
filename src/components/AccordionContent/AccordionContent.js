@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./AccordionContent.css";
 import EditInput from "../EditInput/EditInput";
-import { TodoContext } from "../../App";
+import { TodoContext } from "../../Main";
 import {
   DeleteOutlined,
   CalendarOutlined,
@@ -9,6 +9,8 @@ import {
   PushpinOutlined,
   EditOutlined,
 } from "@ant-design/icons";
+import firebase from "../../firebase/firebase";
+import { updateDoc } from "../../firebase/firestore";
 const moment = require("moment");
 
 export default function AccordionContent({
@@ -21,7 +23,6 @@ export default function AccordionContent({
   setEditedTodo,
 }) {
   const { state, dispatch } = useContext(TodoContext);
-
   const [dateValue, setDateValue] = useState("");
   const [prevCalendarDate, setPrevCalendarDate] = useState("");
 
@@ -59,6 +60,12 @@ export default function AccordionContent({
       setDateValue(todo.date);
     }
     setEditOn(!editOn);
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        updateDoc(user.uid, { todos: state.todos });
+      }
+    });
   };
 
   const editClick = (initDate) => {
@@ -141,6 +148,11 @@ export default function AccordionContent({
           style={{ fontSize: "26px" }}
           onClick={() => {
             dispatch({ type: "DELETE_TODO", deleteId: todo.id });
+            firebase.auth().onAuthStateChanged((user) => {
+              if (user) {
+                updateDoc(user.uid, { todos: state.todos });
+              }
+            });
           }}
         />
       </div>

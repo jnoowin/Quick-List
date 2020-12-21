@@ -1,13 +1,21 @@
 import React, { useContext } from "react";
 import "./CheckBox.css";
-import { TodoContext } from "../../App";
+import { TodoContext } from "../../Main";
+import firebase from "../../firebase/firebase";
+import { updateDoc } from "../../firebase/firestore";
 
 export default function CheckBox({ todo }) {
-  const { dispatch } = useContext(TodoContext);
+  const { state, dispatch } = useContext(TodoContext);
 
   const handleClick = (e) => {
     e.stopPropagation();
     dispatch({ type: "EDIT_TODO", editedTodo: { ...todo, isCompleted: !todo.isCompleted } });
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        updateDoc(user.uid, { todos: state.todos });
+      }
+    });
   };
 
   return (

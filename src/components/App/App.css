@@ -28,7 +28,6 @@
   .todoList {
     display: flex;
     flex-direction: column;
-    display: flex;
     overflow-y: scroll;
     overflow-x: hidd888888en;
     max-height: 100%;
