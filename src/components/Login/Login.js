@@ -1,24 +1,26 @@
 import React from "react";
 import "./Login.css";
-import clientId from "./clientId";
+import { signIn } from "../../firebase/auth";
 import { Link } from "react-router-dom";
-import GoogleLogin from "react-google-login";
+import GoogleIcon from "./google-512.png";
 
 export default function Login() {
-  const onSuccess = (response) => {
-    console.log(response);
-  };
-
-  const onFailure = (response) => {
-    console.log(response);
-  };
-
   return (
     <div className="loginPage">
       <div className="loginCard">
-        <h3>Login:</h3>
-        <GoogleLogin clientId={clientId} onSuccess={onSuccess} onFailure={onFailure} />
-        <p>or try it without logging in here</p>
+        <h3>
+          <b>Login:</b>
+        </h3>
+        <button onClick={() => signIn()}>
+          <img src={GoogleIcon} width="25" alt="google icon"></img>
+          Google
+        </button>
+        <p>
+          or try it without logging in{" "}
+          <Link to="/app" onClick={() => localStorage.setItem("guest", "true")}>
+            here
+          </Link>
+        </p>
       </div>
     </div>
   );
