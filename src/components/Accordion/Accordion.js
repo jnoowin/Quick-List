@@ -9,7 +9,6 @@ export default function Accordion({ todo }) {
   const [active, setActive] = useState(false);
   const [editOn, setEditOn] = useState(false);
   const contentRef = useRef(null);
-
   const [editedTodo, setEditedTodo] = useState({ ...todo });
 
   const changeAccordion = () => {
@@ -20,7 +19,14 @@ export default function Accordion({ todo }) {
     <div className="accordionDiv">
       <div className={`accordion ${active}`} onClick={changeAccordion}>
         <CheckBox todo={todo} />
-        <span style={{ display: editOn ? "none" : "block" }} className="accordionTitle">
+        <span
+          style={{
+            display: editOn ? "none" : "block",
+            textDecoration: todo.isCompleted ? "line-through" : "none",
+            color: todo.isCompleted ? "gray" : "inherit",
+          }}
+          className="accordionTitle"
+        >
           {todo.title}
         </span>
         <EditInput

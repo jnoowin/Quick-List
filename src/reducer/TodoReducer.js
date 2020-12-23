@@ -14,14 +14,18 @@ export const TodoReducer = (state, action) => {
     case "ADD_TODO":
       if (state.todos.length > 0) {
         const newTodos = [...state.todos];
-        newTodos.splice(DateBinarySearch(newTodos, dayjs(state.calendarDate, "M-D-YYYY")), 0, {
-          title: action.newTitle,
-          text: "",
-          location: "",
-          date: state.calendarDate,
-          isCompleted: false,
-          id: shortid.generate(),
-        });
+        newTodos.splice(
+          DateBinarySearch(newTodos, dayjs(state.calendarDate, "M-D-YYYY")),
+          0,
+          {
+            title: action.newTitle,
+            text: "",
+            location: "",
+            date: state.calendarDate,
+            isCompleted: false,
+            id: shortid.generate(),
+          }
+        );
         return {
           todos: newTodos,
           calendarDate: state.calendarDate,
@@ -51,7 +55,9 @@ export const TodoReducer = (state, action) => {
       if (state.todos.length <= 1) {
         return { todos: [action.editedTodo], calendarDate: state.calendarDate };
       } else {
-        const newTodos = state.todos.filter((todo) => todo.id !== action.editedTodo.id);
+        const newTodos = state.todos.filter(
+          (todo) => todo.id !== action.editedTodo.id
+        );
         newTodos.splice(
           DateBinarySearch(newTodos, dayjs(action.editedTodo.date, "M-D-YYYY")),
           0,

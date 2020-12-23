@@ -1,21 +1,36 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import "./CalendarListItem.css";
 import { TodoContext } from "../../Main";
+import { updateDoc } from "../../firebase/firestore";
+import { useAuthContext } from "../AuthProvider/AuthProvider";
 const dayjs = require("dayjs");
 const customParseFormat = require("dayjs/plugin/customParseFormat");
 dayjs.extend(customParseFormat);
 
-export default function CalendarListItem({ todo }) {
-  const { dispatch } = useContext(TodoContext);
+export default function CalendarListItem({ todo, update, incrementUpdate }) {
+  const { state, dispatch } = useContext(TodoContext);
+  const { authenticated, uid } = useAuthContext();
+
+  useEffect(() => {
+    if (update) {
+      updateDoc(uid, { todos: state.todos });
+    }
+  }, [update, uid, state.todos]);
 
   const onClick = (e, left, todo) => {
     e.stopPropagation();
+    if (authenticated) {
+      incrementUpdate();
+    }
+
     left
       ? dispatch({
           type: "EDIT_TODO",
           editedTodo: {
             ...todo,
-            date: dayjs(todo.date, "M-D-YYYY").subtract(1, "day").format("M-D-YYYY"),
+            date: dayjs(todo.date, "M-D-YYYY")
+              .subtract(1, "day")
+              .format("M-D-YYYY"),
           },
         })
       : dispatch({

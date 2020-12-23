@@ -1,11 +1,9 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { TodoContext } from "../../Main";
 import "./App.css";
 import TodoForm from "../TodoForm/TodoForm";
 import TodoCalendar from "../TodoCalendar/TodoCalendar";
 import TodoList from "../TodoList/TodoList";
-import firebase from "../../firebase/firebase";
-import { updateDoc } from "../../firebase/firestore";
 import { warningPopup } from "../../firebase/auth";
 import { useHistory } from "react-router-dom";
 import { Spin } from "antd";
@@ -14,23 +12,22 @@ import { useAuthContext } from "../AuthProvider/AuthProvider";
 
 export default function App() {
   const { state, dispatch } = useContext(TodoContext);
-  const { authenticated, uid, userData } = useAuthContext();
-  const [loaded, setLoaded] = useState(false);
+  const { authenticated, userData, loaded } = useAuthContext();
   const todoInputRef = useRef(null);
   const history = useHistory();
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (!user && !(localStorage.getItem("guest") === "true")) {
-        setTimeout(() => {
-          warningPopup();
-          history.push("/");
-        }, 1000);
-      } else {
-        setLoaded(true);
-      }
-    });
-  }, [history]);
+    if (
+      loaded &&
+      !authenticated &&
+      !(localStorage.getItem("guest") === "true")
+    ) {
+      setTimeout(() => {
+        warningPopup();
+        history.push("/");
+      }, 1000);
+    }
+  }, [history, authenticated, loaded]);
 
   useEffect(() => {
     if (loaded) {
@@ -46,10 +43,10 @@ export default function App() {
   }, [state.todos]);
 
   useEffect(() => {
-    if (loaded && authenticated && userData) {
+    if (authenticated && userData) {
       dispatch({ type: "SET_TODOS", todos: userData });
     }
-  }, [loaded, authenticated, dispatch, userData]);
+  }, [authenticated, userData, dispatch]);
 
   useEffect(() => {
     if (localStorage.getItem("guest") === "true") {
@@ -65,10 +62,6 @@ export default function App() {
       localStorage.setItem("todos", JSON.stringify(state.todos));
     }
   }, [state.todos]);
-
-  useEffect(() => {
-    if (authenticated) updateDoc(uid, { todos: state.todos });
-  }, [state.todos, uid, authenticated]);
 
   return (
     <div className="app">

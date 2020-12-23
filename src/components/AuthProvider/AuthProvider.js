@@ -8,12 +8,13 @@ export const AuthContext = createContext();
 export const useAuthContext = () => useContext(AuthContext);
 
 export default function AuthProvider({ children }) {
+  const history = useHistory();
   const [auth, setAuth] = useState({
     userData: null,
     uid: null,
     authenticated: false,
+    loaded: false,
   });
-  const history = useHistory();
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(async (user) => {
@@ -24,26 +25,33 @@ export default function AuthProvider({ children }) {
             userData: userData.todos,
             uid: user.uid,
             authenticated: true,
+            loaded: true,
           });
-          history.push("/app");
         } else {
           insertUser(user);
           setAuth({
             userData: [],
             uid: user.uid,
             authenticated: true,
+            loaded: true,
           });
-          history.push("/app");
         }
       } else {
         setAuth({
           userData: null,
           uid: null,
           authenticated: false,
+          loaded: true,
         });
       }
     });
-  }, [history]);
+  }, []);
+
+  useEffect(() => {
+    if (auth.authenticated) {
+      history.push("/app");
+    }
+  }, [auth.authenticated, history]);
 
   return (
     <AuthContext.Provider value={{ ...auth }}>{children}</AuthContext.Provider>

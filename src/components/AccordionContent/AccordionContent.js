@@ -9,7 +9,7 @@ import {
   PushpinOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import firebase from "../../firebase/firebase";
+import { useAuthContext } from "../AuthProvider/AuthProvider";
 import { updateDoc } from "../../firebase/firestore";
 const moment = require("moment");
 
@@ -25,6 +25,9 @@ export default function AccordionContent({
   const { state, dispatch } = useContext(TodoContext);
   const [dateValue, setDateValue] = useState("");
   const [prevCalendarDate, setPrevCalendarDate] = useState("");
+  const [update, setUpdate] = useState(0);
+  const [updateDelete, setUpdateDelete] = useState(0);
+  const { authenticated, uid } = useAuthContext();
 
   if (prevCalendarDate !== state.calendarDate) {
     setPrevCalendarDate(state.calendarDate);
@@ -32,7 +35,22 @@ export default function AccordionContent({
   }
 
   useEffect(() => {
-    contentRef.current.style.maxHeight = active ? `${contentRef.current.scrollHeight}px` : "0px";
+    if (update) {
+      updateDoc(uid, { todos: state.todos });
+    }
+  }, [update, uid, state.todos]);
+
+  useEffect(() => {
+    if (updateDelete) {
+      dispatch({ type: "DELETE_TODO", deleteId: todo.id });
+      updateDoc(uid, { todos: state.todos.filter((t) => t.id !== todo.id) });
+    }
+  }, [updateDelete, uid, state.todos, dispatch, todo.id]);
+
+  useEffect(() => {
+    contentRef.current.style.maxHeight = active
+      ? `${contentRef.current.scrollHeight}px`
+      : "0px";
   }, [contentRef, active, editOn]);
 
   const iconStyle = {
@@ -55,17 +73,18 @@ export default function AccordionContent({
   const saveClick = (e, editedTodo, dateValue, todo) => {
     e.preventDefault();
     if (moment(dateValue, "M-D-YYY", true).isValid() || dateValue === "") {
-      dispatch({ type: "EDIT_TODO", editedTodo: { ...editedTodo, date: dateValue } });
+      dispatch({
+        type: "EDIT_TODO",
+        editedTodo: { ...editedTodo, date: dateValue },
+      });
     } else {
       setDateValue(todo.date);
     }
     setEditOn(!editOn);
 
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        updateDoc(user.uid, { todos: state.todos });
-      }
-    });
+    if (authenticated) {
+      setUpdate((update) => update + 1);
+    }
   };
 
   const editClick = (initDate) => {
@@ -143,16 +162,14 @@ export default function AccordionContent({
         >
           Save
         </button>
-        <EditOutlined style={editIconStyle} onClick={() => editClick(todo.date)} />
+        <EditOutlined
+          style={editIconStyle}
+          onClick={() => editClick(todo.date)}
+        />
         <DeleteOutlined
           style={{ fontSize: "26px" }}
           onClick={() => {
-            dispatch({ type: "DELETE_TODO", deleteId: todo.id });
-            firebase.auth().onAuthStateChanged((user) => {
-              if (user) {
-                updateDoc(user.uid, { todos: state.todos });
-              }
-            });
+            setUpdateDelete((updateDelete) => updateDelete + 1);
           }}
         />
       </div>
