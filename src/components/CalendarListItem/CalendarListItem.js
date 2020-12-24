@@ -32,6 +32,7 @@ export default function CalendarListItem({ todo, update, incrementUpdate }) {
               .subtract(1, "day")
               .format("M-D-YYYY"),
           },
+          date: true,
         })
       : dispatch({
           type: "EDIT_TODO",
@@ -39,6 +40,7 @@ export default function CalendarListItem({ todo, update, incrementUpdate }) {
             ...todo,
             date: dayjs(todo.date, "M-D-YYYY").add(1, "day").format("M-D-YYYY"),
           },
+          date: true,
         });
   };
 

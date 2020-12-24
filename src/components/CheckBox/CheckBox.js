@@ -10,8 +10,10 @@ export default function CheckBox({ todo }) {
   const { authenticated, uid } = useAuthContext();
 
   useEffect(() => {
+    console.log("why", update);
     if (update) {
       updateDoc(uid, { todos: state.todos });
+      console.log("updated", state.todos);
     }
   }, [update, uid, state.todos]);
 
@@ -20,16 +22,18 @@ export default function CheckBox({ todo }) {
     dispatch({
       type: "EDIT_TODO",
       editedTodo: { ...todo, isCompleted: !todo.isCompleted },
+      check: true,
     });
     if (authenticated) {
-      setUpdate(update + 1);
+      setUpdate((update) => update + 1);
+      console.log(update);
     }
   };
 
   return (
     <div
       className="completeCheckBox"
-      onClick={(e) => handleClick(e)}
+      onClick={handleClick}
       style={{ backgroundColor: todo.isCompleted ? "rgb(100, 140, 250)" : "" }}
     >
       <div

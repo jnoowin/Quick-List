@@ -55,6 +55,40 @@ export const TodoReducer = (state, action) => {
       if (state.todos.length <= 1) {
         return { todos: [action.editedTodo], calendarDate: state.calendarDate };
       } else {
+        const todo = state.todos.find(
+          (todo) => todo.id === action.editedTodo.id
+        );
+        if (todo.date !== action.editedTodo.date) {
+          const newTodos = state.todos.filter(
+            (todo) => todo.id !== action.editedTodo.id
+          );
+          newTodos.splice(
+            DateBinarySearch(
+              newTodos,
+              dayjs(action.editedTodo.date, "M-D-YYYY")
+            ),
+            0,
+            action.editedTodo
+          );
+          console.log(newTodos);
+          return {
+            todos: newTodos,
+            calendarDate: state.calendarDate,
+          };
+        } else {
+          const newTodos = state.todos.map((todo) => {
+            if (todo.id === action.editedTodo.id) {
+              return action.editedTodo;
+            }
+            return todo;
+          });
+          return {
+            todos: newTodos,
+            calendarDate: state.calendarDate,
+          };
+        }
+      }
+    /*else if (action.date) {
         const newTodos = state.todos.filter(
           (todo) => todo.id !== action.editedTodo.id
         );
@@ -63,11 +97,23 @@ export const TodoReducer = (state, action) => {
           0,
           action.editedTodo
         );
+        console.log(newTodos);
         return {
           todos: newTodos,
           calendarDate: state.calendarDate,
         };
-      }
+      } else {
+        const newTodos = state.todos.map((todo) => {
+          if (todo.id === action.editedTodo.id) {
+            return action.editedTodo;
+          }
+          return todo;
+        });
+        return {
+          todos: newTodos,
+          calendarDate: state.calendarDate,
+        };
+      }*/
     case "SET_TODOS":
       return {
         todos: [...action.todos],
